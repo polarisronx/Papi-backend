@@ -1,61 +1,60 @@
 package com.polaris.project.model.dto.interfaceInfo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 创建请求
  *
- * @TableName product
+ * @TableName interfaceInfo
+ * @author polaris
+ * * 不需要上传用户的id，由系统自动生成
+ * * 接口状态默认是关闭，有默认值就不需要用户上传
+ * * 创建人由系统获取当前登录用户在后台自动上传
+ * * 创建时间、更新时间和是否删除都是由系统和后台操作的
  */
 @Data
 public class InterfaceInfoAddRequest implements Serializable {
 
     /**
-     * 年龄
+     * 名称
      */
-    private Integer age;
+    private String name;
 
     /**
-     * 性别（0-男, 1-女）
+     * 描述
      */
-    private Integer gender;
+    private String description;
 
     /**
-     * 学历
+     * 接口地址
      */
-    private String education;
+    private String url;
 
     /**
-     * 地点
+     * 请求参数
      */
-    private String place;
+    private String requestParams;
 
     /**
-     * 职业
+     * 请求头
      */
-    private String job;
+    private String requestHeader;
 
     /**
-     * 联系方式
+     * 响应头
      */
-    private String contact;
+    private String responseHeader;
 
     /**
-     * 感情经历
+     * 请求类型
      */
-    private String loveExp;
-
-    /**
-     * 内容（个人介绍）
-     */
-    private String content;
-
-    /**
-     * 照片地址
-     */
-    private String photo;
+    private String method;
 
     private static final long serialVersionUID = 1L;
 }

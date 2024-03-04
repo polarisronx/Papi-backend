@@ -1,11 +1,17 @@
 package com.polaris.project.model.dto.interfaceInfo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 更新请求
+ * 创建人是不能修改的，除非是限定由管理员修改，这里不提供
+ * 创建时间、更新时间和是否删除默认不能手动修改
  *
  * @TableName product
  */
@@ -13,64 +19,51 @@ import java.io.Serializable;
 public class InterfaceInfoUpdateRequest implements Serializable {
 
     /**
-     * id
+     * 主键
+     * 主键是不能修改，但是一般需要用来指定更新哪条数据
      */
-    private long id;
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
-     * 年龄
+     * 名称
      */
-    private Integer age;
+    private String name;
 
     /**
-     * 性别（0-男, 1-女）
+     * 描述
      */
-    private Integer gender;
+    private String description;
 
     /**
-     * 学历
+     * 接口地址
      */
-    private String education;
+    private String url;
 
     /**
-     * 地点
+     * 请求参数
      */
-    private String place;
+    private String requestParams;
 
     /**
-     * 职业
+     * 请求头
      */
-    private String job;
+    private String requestHeader;
 
     /**
-     * 联系方式
+     * 响应头
      */
-    private String contact;
+    private String responseHeader;
 
     /**
-     * 感情经历
+     * 接口状态（0-关闭，1-开启）
      */
-    private String loveExp;
+    private Integer status;
 
     /**
-     * 内容（个人介绍）
+     * 请求类型
      */
-    private String content;
-
-    /**
-     * 照片地址
-     */
-    private String photo;
-
-    /**
-     * 状态（0-待审核, 1-通过, 2-拒绝）
-     */
-    private Integer reviewStatus;
-
-    /**
-     * 审核信息
-     */
-    private String reviewMessage;
+    private String method;
 
     private static final long serialVersionUID = 1L;
 }

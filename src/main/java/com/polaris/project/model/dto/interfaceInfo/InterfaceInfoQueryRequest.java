@@ -1,69 +1,93 @@
 package com.polaris.project.model.dto.interfaceInfo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.polaris.project.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 查询请求
+ * 用户一般不按创建时间、更新时间和是否删除查询，一般都是范围查询
+ * 因此，这里不提供这些字段的查询，其他字段保留
  *
- * @author yupi
+ * @author polaris
+ * @date 2024/03/04
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class InterfaceInfoQueryRequest extends PageRequest implements Serializable {
 
     /**
-     * 年龄
+     * 主键
      */
-    private Integer age;
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
-     * 性别（0-男, 1-女）
+     * 名称
      */
-    private Integer gender;
+    private String name;
 
     /**
-     * 学历
+     * 描述
      */
-    private String education;
+    private String description;
 
     /**
-     * 地点
+     * 接口地址
      */
-    private String place;
+    private String url;
 
     /**
-     * 职业
+     * 请求参数
      */
-    private String job;
+    private String requestParams;
 
     /**
-     * 联系方式
+     * 请求头
      */
-    private String contact;
+    private String requestHeader;
 
     /**
-     * 感情经历
+     * 响应头
      */
-    private String loveExp;
+    private String responseHeader;
 
     /**
-     * 内容（个人介绍），支持模糊查询
+     * 接口状态（0-关闭，1-开启）
      */
-    private String content;
+    private Integer status;
 
     /**
-     * 状态（0-待审核, 1-通过, 2-拒绝）
+     * 请求类型
      */
-    private Integer reviewStatus;
+    private String method;
 
     /**
-     * 创建用户 id
+     * 创建人
      */
     private Long userId;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
+     * 是否删除(0-未删, 1-已删)
+     */
+    @TableLogic
+    private Integer isDelete;
 
     private static final long serialVersionUID = 1L;
 }
