@@ -9,8 +9,8 @@ import com.polaris.project.common.DeleteRequest;
 import com.polaris.project.common.ErrorCode;
 import com.polaris.project.common.ResultUtils;
 import com.polaris.project.model.dto.user.*;
-import com.yupi.project.model.dto.*;
-import com.yupi.project.model.dto.user.*;
+
+
 import com.polaris.project.model.entity.User;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * 用户接口
  *
- * @author yupi
+ * @author polaris
  */
 @RestController
 @RequestMapping("/user")

@@ -3,7 +3,7 @@ package com.polaris.project.common;
 /**
  * 错误码
  *
- * @author yupi
+ * @author polaris
  */
 public enum ErrorCode {
 

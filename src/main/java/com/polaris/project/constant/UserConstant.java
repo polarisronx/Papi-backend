@@ -3,7 +3,7 @@ package com.polaris.project.constant;
 /**
  * 用户常量
  *
- * @author yupi
+ * @author polaris
  */
 public interface UserConstant {
 

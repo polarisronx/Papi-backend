@@ -22,7 +22,7 @@ import static com.polaris.project.constant.UserConstant.USER_LOGIN_STATE;
 /**
  * 用户服务实现类
  *
- * @author yupi
+ * @author polaris
  */
 @Service
 @Slf4j
@@ -35,7 +35,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * 盐值，混淆密码
      */
-    private static final String SALT = "yupi";
+    private static final String SALT = "polaris";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
