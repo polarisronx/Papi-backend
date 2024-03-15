@@ -2,11 +2,9 @@ package com.polaris.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.polaris.papiclientsdk.client.PapiClient;
 import com.polaris.project.annotation.AuthCheck;
-import com.polaris.project.common.BaseResponse;
-import com.polaris.project.common.DeleteRequest;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.common.ResultUtils;
+import com.polaris.project.common.*;
 import com.polaris.project.constant.CommonConstant;
 import com.polaris.project.exception.BusinessException;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
@@ -14,19 +12,21 @@ import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoUpdateRequest;
 import com.polaris.project.model.entity.InterfaceInfo;
 import com.polaris.project.model.entity.User;
+import com.polaris.project.model.enums.InterfaceStatusrEnum;
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.builders.ValidationResult;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * 接口管理
  *
  * @author polaris
  */
@@ -51,7 +51,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/add")
-    public BaseResponse<Long> addinterfaceInfo(@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest, HttpServletRequest request) {
+    public BaseResponse<Long> addInterfaceInfo(@RequestBody InterfaceInfoAddRequest interfaceInfoAddRequest, HttpServletRequest request) {
         if (interfaceInfoAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -77,7 +77,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteinterfaceInfo(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
+    public BaseResponse<Boolean> deleteInterfaceInfo(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -104,7 +104,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/update")
-    public BaseResponse<Boolean> updateinterfaceInfo(@RequestBody InterfaceInfoUpdateRequest interfaceInfoUpdateRequest,
+    public BaseResponse<Boolean> updateInterfaceInfo(@RequestBody InterfaceInfoUpdateRequest interfaceInfoUpdateRequest,
                                             HttpServletRequest request) {
         if (interfaceInfoUpdateRequest == null || interfaceInfoUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -151,7 +151,7 @@ public class InterfaceInfoController {
      */
     @AuthCheck(mustRole = "admin")
     @GetMapping("/list")
-    public BaseResponse<List<InterfaceInfo>> listinterfaceInfo(InterfaceInfoQueryRequest interfaceInfoQueryRequest) {
+    public BaseResponse<List<InterfaceInfo>> listInterfaceInfo(InterfaceInfoQueryRequest interfaceInfoQueryRequest) {
         InterfaceInfo interfaceInfoQuery = new InterfaceInfo();
         if (interfaceInfoQueryRequest != null) {
             BeanUtils.copyProperties(interfaceInfoQueryRequest, interfaceInfoQuery);
@@ -169,7 +169,7 @@ public class InterfaceInfoController {
      * @return
      */
     @GetMapping("/list/page")
-    public BaseResponse<Page<InterfaceInfo>> listinterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
+    public BaseResponse<Page<InterfaceInfo>> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
         if (interfaceInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -194,6 +194,87 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
+    @Resource
+    private PapiClient papiClient;
+
+    /**
+     * 上线接口
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/online")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                     HttpServletRequest request) {
+        // 校验参数是否为空
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 1 校验接口是否存在
+        long id = idRequest.getId();
+        // 根据id查出接口的信息
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        // 如果查询到该接口不存在
+        if (oldInterfaceInfo == null){
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        // 2 测试接口是否可以使用
+        // 测试用模拟数据
+        com.polaris.papiclientsdk.model.User user = new com.polaris.papiclientsdk.model.User();
+        user.setUsername("test_user");
+        String nameByPost = papiClient.getNameByPost2(user);
+        if (StringUtils.isBlank(nameByPost)){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口服务不可用");
+        }
+        // 3 更新接口的状态 status
+        // 新建一个接口对象
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        // 设置接口的状态
+        interfaceInfo.setStatus(InterfaceStatusrEnum.ONLINE.getValue());
+        // 更新接口
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        // 返回成功
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 下线接口
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
+                                                     HttpServletRequest request) {
+        // 校验参数是否为空
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 1 校验接口是否存在
+        long id = idRequest.getId();
+        // 根据id查出接口的信息
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        // 如果查询到该接口不存在
+        if (oldInterfaceInfo == null){
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        // 2 更新接口的状态 status
+        // 新建一个接口对象
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        interfaceInfo.setId(id);
+        // 设置接口的状态
+        interfaceInfo.setStatus(InterfaceStatusrEnum.OFFLINE.getValue());
+        // 更新接口
+        boolean result = interfaceInfoService.updateById(interfaceInfo);
+        // 返回成功
+        return ResultUtils.success(result);
+    }
     // endregion
 
 }
