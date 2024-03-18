@@ -2,6 +2,7 @@ package com.polaris.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.polaris.papiclientsdk.client.PapiClient;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.common.*;
@@ -10,6 +11,7 @@ import com.polaris.project.exception.BusinessException;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoUpdateRequest;
+import com.polaris.project.model.dto.interfaceInfo.InterfaceInvokeRequest;
 import com.polaris.project.model.entity.InterfaceInfo;
 import com.polaris.project.model.entity.User;
 import com.polaris.project.model.enums.InterfaceStatusrEnum;
@@ -17,9 +19,9 @@ import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.builders.ValidationResult;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/interfaceInfo")
 @Slf4j
-public class InterfaceInfoController {
+public class InterfaceController {
 
     @Resource
     private InterfaceInfoService interfaceInfoService;
@@ -273,6 +275,48 @@ public class InterfaceInfoController {
         // 更新接口
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         // 返回成功
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 接口测试调用
+     *
+     * @param interfaceInvokeRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/Invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInvokeRequest interfaceInvokeRequest,
+                                                      HttpServletRequest request) {
+        // 校验参数是否为空
+        if (interfaceInvokeRequest == null || interfaceInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 1 获取接口id
+        long id = interfaceInvokeRequest.getId();
+        // 获取用户请求参数
+        String userRequestParams = interfaceInvokeRequest.getUserRequestParams();
+        // 根据id查出接口的信息
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        // 如果查询到该接口不存在
+        if (oldInterfaceInfo == null){
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        // 判断接口状态，如果接口状态不是已上线状态，则抛出业务异常
+        if (oldInterfaceInfo.getStatus().equals(InterfaceStatusrEnum.OFFLINE.getValue())){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口未上线");
+        }
+        // 获取当前登录用户的AK和SK
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        PapiClient papi = new PapiClient(accessKey, secretKey);
+        Gson gson = new Gson();
+        // 将用户传来的请求参数转为接口中对应的对象类型
+        com.polaris.papiclientsdk.model.User user = gson.fromJson(userRequestParams, com.polaris.papiclientsdk.model.User.class);
+        // 调用papi接口
+        String result = papi.getNameByPost2(user);
+        // 返回调用结果
         return ResultUtils.success(result);
     }
     // endregion

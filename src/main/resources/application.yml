@@ -4,7 +4,7 @@ spring:
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/openAPI
+    url: jdbc:mysql://localhost:3306/openAPI?serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   mvc:
