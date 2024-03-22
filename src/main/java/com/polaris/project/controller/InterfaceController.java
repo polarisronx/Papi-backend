@@ -7,6 +7,7 @@ import com.polaris.papiclientsdk.client.PapiClient;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.common.*;
 import com.polaris.project.constant.CommonConstant;
+import com.polaris.project.constant.UserConstant;
 import com.polaris.project.exception.BusinessException;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoAddRequest;
 import com.polaris.project.model.dto.interfaceInfo.InterfaceInfoQueryRequest;
@@ -207,7 +208,7 @@ public class InterfaceController {
      * @return
      */
     @PostMapping("/online")
-    @AuthCheck(mustRole = "admin")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest,
                                                      HttpServletRequest request) {
         // 校验参数是否为空
@@ -250,7 +251,7 @@ public class InterfaceController {
      * @return
      */
     @PostMapping("/offline")
-    @AuthCheck(mustRole = "admin")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
                                                      HttpServletRequest request) {
         // 校验参数是否为空
