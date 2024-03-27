@@ -4,10 +4,11 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.common.entity.User;
 import com.polaris.project.exception.BusinessException;
 import com.polaris.project.common.ErrorCode;
 import com.polaris.project.mapper.UserMapper;
-import com.polaris.project.model.entity.User;
+
 import com.polaris.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

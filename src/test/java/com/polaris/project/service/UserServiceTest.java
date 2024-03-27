@@ -1,6 +1,7 @@
 package com.polaris.project.service;
 
-import com.polaris.project.model.entity.User;
+
+import com.polaris.common.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
