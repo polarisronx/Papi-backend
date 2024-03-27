@@ -1,10 +1,11 @@
 package com.polaris.project.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.polaris.common.entity.User;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.common.ErrorCode;
 import com.polaris.project.exception.BusinessException;
-import com.polaris.project.model.entity.User;
+
 import com.polaris.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;

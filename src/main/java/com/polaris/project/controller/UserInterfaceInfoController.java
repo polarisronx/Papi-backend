@@ -2,6 +2,8 @@ package com.polaris.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.polaris.common.entity.User;
+import com.polaris.common.entity.UserInterfaceInfo;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.common.*;
 import com.polaris.project.constant.CommonConstant;
@@ -12,8 +14,7 @@ import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddReque
 import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
 import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoUpdateRequest;
 
-import com.polaris.project.model.entity.UserInterfaceInfo;
-import com.polaris.project.model.entity.User;
+
 
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserInterfaceInfoService;

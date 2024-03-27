@@ -3,6 +3,7 @@ package com.polaris.project.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
+import com.polaris.common.entity.User;
 import com.polaris.project.exception.BusinessException;
 import com.polaris.project.common.BaseResponse;
 import com.polaris.project.common.DeleteRequest;
@@ -11,7 +12,7 @@ import com.polaris.project.common.ResultUtils;
 import com.polaris.project.model.dto.user.*;
 
 
-import com.polaris.project.model.entity.User;
+
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
