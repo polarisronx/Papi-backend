@@ -1,5 +1,6 @@
 package com.polaris.project.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.polaris.common.entity.UserInterfaceInfo;
 import com.polaris.common.service.InnerUserInterfaceInfoService;
 import com.polaris.project.service.UserInterfaceInfoService;
@@ -30,5 +31,13 @@ public class InnerUserInterfaceInfoServiceImpl implements InnerUserInterfaceInfo
     @Override
     public boolean invokeCount (long interfaceInfoId, long userId){
         return userInterfaceInfoService.invokeCount(interfaceInfoId, userId);
+    }
+
+    @Override
+    public int leftCount (long interfaceInfoId, long userId){
+        QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("interfaceInfoId", interfaceInfoId);
+        queryWrapper.eq("userId", userId);
+        return userInterfaceInfoService.getOne(queryWrapper).getLeftNum();
     }
 }

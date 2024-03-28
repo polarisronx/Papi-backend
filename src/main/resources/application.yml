@@ -44,3 +44,8 @@ dubbo:
     # 配置注册中心为 nacos，使用的地址是 nacos://127.0.0.1:8848
     id: nacos-registry
     address: nacos://127.0.0.1:8848
+# 测试时用的papi客户端，用户使用时要带入用户的AK和SK
+papi:
+  client:
+    access-key: polaris
+    secret-key: abcdefgh
