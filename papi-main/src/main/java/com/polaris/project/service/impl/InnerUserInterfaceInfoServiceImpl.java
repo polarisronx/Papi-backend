@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @Create 2024-03-27 21:06
  * @Version 1.0
  * ClassName InnerUserInterfaceInfoServiceImpl
- * Package com.polaris.common.service.impl
+ * Package com.polaris.utils.service.impl
  * Description
  */
 @DubboService

@@ -7,7 +7,7 @@ import lombok.Data;
  * @Create 2024-04-02 11:38
  * @Version 1.0
  * ClassName Credential
- * Package com.polaris.papiclientsdk.common
+ * Package com.polaris.papiclientsdk.utils
  * Description 用户登录凭证信息
  */
 @Data

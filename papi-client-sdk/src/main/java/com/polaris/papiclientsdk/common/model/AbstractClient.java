@@ -31,7 +31,7 @@ import static com.polaris.papiclientsdk.common.utils.SignUtils.*;
  * @create 2024-04-02 11:07
  * @version 2.0
  * ClassName AbstractClient
- * Package com.polaris.papiclientsdk.common.utils
+ * Package com.polaris.papiclientsdk.utils.utils
  * Description
  */
 @Data

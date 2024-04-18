@@ -7,21 +7,22 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.polaris.common.entity.InterfaceInfo;
 import com.polaris.common.entity.User;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
+import com.polaris.common.result.BaseResponse;
+import com.polaris.common.result.ResultUtils;
 import com.polaris.papiclientsdk.basicapi.client.PapiClient;
 import com.polaris.papiclientsdk.common.execption.PapiClientSDKException;
 import com.polaris.papiclientsdk.common.model.CommonRequest;
 import com.polaris.papiclientsdk.common.model.CommonResponse;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
-import com.polaris.project.common.BaseResponse;
-import com.polaris.project.common.DeleteRequest;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.common.ResultUtils;
+import com.polaris.project.model.vo.UserVO;
+import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.dto.interfaceInfo.*;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.constant.CommonConstant;
 import com.polaris.project.constant.UserConstant;
-import com.polaris.project.exception.BusinessException;
 import com.polaris.project.model.enums.InterfaceStatusrEnum;
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserService;
@@ -71,7 +72,7 @@ public class InterfaceController {
         BeanUtils.copyProperties(interfaceInfoAddRequest, interfaceInfo);
         // 校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, true);
-        User loginUser = userService.getLoginUser(request);
+        UserVO loginUser = userService.getLoginUser(request);
         interfaceInfo.setUserId(loginUser.getId());
         boolean result = interfaceInfoService.save(interfaceInfo);
         if (!result) {
@@ -93,7 +94,7 @@ public class InterfaceController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
         InterfaceInfo oldinterfaceInfo = interfaceInfoService.getById(id);
@@ -125,7 +126,7 @@ public class InterfaceController {
         BeanUtils.copyProperties(interfaceInfoUpdateRequest, interfaceInfo);
         // 参数校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, false);
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         long id = interfaceInfoUpdateRequest.getId();
         // 判断是否存在
         InterfaceInfo oldinterfaceInfo = interfaceInfoService.getById(id);
@@ -318,16 +319,13 @@ public class InterfaceController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口未上线");
         }
         // 获取当前登录用户的AK和SK
-        User loginUser = userService.getLoginUser(request);
+        UserVO loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
         Credential credential = new Credential(accessKey, secretKey);
         HttpProfile httpProfile = new HttpProfile(interfaceInfo.getEndpoint(), interfaceInfo.getPath(), interfaceInfo.getMethod());
         // 创建papi客户端
         PapiClient papi = new PapiClient(credential,httpProfile);
-
-
-
 
         // 构建请求参数
         Gson gson = new Gson();

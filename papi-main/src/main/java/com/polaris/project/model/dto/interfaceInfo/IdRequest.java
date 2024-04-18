@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @create 2024-03-15 16:49
  * @version 1.0
  * ClassName IdRequest
- * Package com.polaris.project.common
+ * Package com.polaris.project.utils
  * Description 传入id封装成一个对象，便于json参数传递
  */
 @Data

@@ -13,13 +13,13 @@ spring:
   # session 失效时间（分钟）
   session:
     timeout: 86400
-    store-type: none #redis
+    store-type: redis #redis 从Redis读写session none 表示存储在单台服务器
   # redis 配置
-#  redis:
-#    port: 6379
-#    host: 192.168.108.128
-#    database: 0
-#    password: 123456
+  redis:
+    port: 6379
+    host: 192.168.108.128
+    database: 0
+    password: 123456
 server:
   port: 7529
   servlet:

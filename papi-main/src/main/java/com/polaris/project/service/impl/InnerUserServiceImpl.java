@@ -2,9 +2,9 @@ package com.polaris.project.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.polaris.common.entity.User;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.service.InnerUserService;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.exception.BusinessException;
 import com.polaris.project.mapper.UserMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @Create 2024-03-27 21:05
  * @Version 1.0
  * ClassName InnerUserServiceImpl
- * Package com.polaris.common.service.impl
+ * Package com.polaris.utils.service.impl
  * Description
  */
 @DubboService

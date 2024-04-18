@@ -2,8 +2,8 @@ package com.polaris.project.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.polaris.common.entity.InterfaceInfo;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.exception.BusinessException;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
 import com.polaris.project.mapper.InterfaceInfoMapper;
 import com.polaris.project.service.InterfaceInfoService;
 import org.apache.commons.lang3.StringUtils;

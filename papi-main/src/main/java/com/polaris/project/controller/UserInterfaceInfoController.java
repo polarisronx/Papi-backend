@@ -4,14 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polaris.common.entity.User;
 import com.polaris.common.entity.UserInterfaceInfo;
-import com.polaris.project.common.BaseResponse;
-import com.polaris.project.common.DeleteRequest;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.common.ResultUtils;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
+import com.polaris.common.result.BaseResponse;
+import com.polaris.common.result.ResultUtils;
+import com.polaris.project.model.vo.UserVO;
+import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.annotation.AuthCheck;
 import com.polaris.project.constant.CommonConstant;
 import com.polaris.project.constant.UserConstant;
-import com.polaris.project.exception.BusinessException;
 import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddRequest;
 import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
 import com.polaris.project.model.dto.userInterfaceInfo.UserInterfaceInfoUpdateRequest;
@@ -62,7 +63,7 @@ public class UserInterfaceInfoController {
         BeanUtils.copyProperties(userInterfaceInfoAddRequest, userInterfaceInfo);
         // 校验
         userInterfaceInfoService.validUserInterfaceInfo(userInterfaceInfo, true);
-        User loginUser = userService.getLoginUser(request);
+        UserVO loginUser = userService.getLoginUser(request);
         userInterfaceInfo.setUserId(loginUser.getId());
         boolean result = userInterfaceInfoService.save(userInterfaceInfo);
         if (!result) {
@@ -85,7 +86,7 @@ public class UserInterfaceInfoController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
         UserInterfaceInfo olduserInterfaceInfo = userInterfaceInfoService.getById(id);
@@ -118,7 +119,7 @@ public class UserInterfaceInfoController {
         BeanUtils.copyProperties(userInterfaceInfoUpdateRequest, userInterfaceInfo);
         // 参数校验
         userInterfaceInfoService.validUserInterfaceInfo(userInterfaceInfo, false);
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         long id = userInterfaceInfoUpdateRequest.getId();
         // 判断是否存在
         UserInterfaceInfo olduserInterfaceInfo = userInterfaceInfoService.getById(id);

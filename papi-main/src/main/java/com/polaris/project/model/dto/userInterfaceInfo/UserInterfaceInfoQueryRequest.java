@@ -2,7 +2,7 @@ package com.polaris.project.model.dto.userInterfaceInfo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.polaris.project.common.PageRequest;
+import com.polaris.project.utils.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

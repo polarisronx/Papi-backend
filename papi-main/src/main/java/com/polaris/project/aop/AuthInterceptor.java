@@ -2,9 +2,10 @@ package com.polaris.project.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.polaris.common.entity.User;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
 import com.polaris.project.annotation.AuthCheck;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.exception.BusinessException;
+import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -48,7 +49,7 @@ public class AuthInterceptor {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         // 当前登录用户
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         // 拥有任意权限即通过
         if (CollectionUtils.isNotEmpty(anyRole)) {
             String userRole = user.getUserRole();

@@ -17,7 +17,7 @@ import java.util.Map;
  * @Create 2024-04-02 11:07
  * @Version 1.0
  * ClassName AbstactModel
- * Package com.polaris.papiclientsdk.common.utils
+ * Package com.polaris.papiclientsdk.utils.utils
  * Description
  */
 @Data

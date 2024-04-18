@@ -5,7 +5,7 @@ package com.polaris.papiclientsdk.common.execption;
  * @Create 2024-04-02 16:06
  * @Version 1.0
  * ClassName ErrorCode
- * Package com.polaris.papiclientsdk.common.execption
+ * Package com.polaris.papiclientsdk.utils.execption
  * Description
  */
 public enum ErrorCode {

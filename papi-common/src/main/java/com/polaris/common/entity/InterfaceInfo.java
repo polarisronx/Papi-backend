@@ -52,6 +52,17 @@ public class InterfaceInfo implements Serializable {
      *
      */
     private String requestParams;
+    /**
+     * 接口示意图
+     */
+    @TableField(value = "interfaceAvatar")
+    private String interfaceAvatar;
+
+    /**
+     * 接口类型：0 文字类；1 图片类；2 文件类；3 其他
+     */
+    @TableField(value = "interfaceType")
+    private Integer interfaceType;
 
     /**
      * 请求头
@@ -95,6 +106,7 @@ public class InterfaceInfo implements Serializable {
      */
     @TableLogic
     private Integer isDelete;
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

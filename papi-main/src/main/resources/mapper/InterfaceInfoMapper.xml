@@ -20,6 +20,8 @@
             <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
             <result property="path" column="path" jdbcType="VARCHAR"/>
             <result property="action" column="action" jdbcType="VARCHAR"/>
+            <result property="interfaceAvatar" column="interfaceAvatar" jdbcType="VARCHAR"/>
+            <result property="interfaceType" column="interfaceType" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -27,6 +29,7 @@
         endpoint,requestParams,requestHeader,
         responseHeader,status,method,
         userId,createTime,updateTime,
-        isDelete,path,action
+        isDelete,path,action,
+        interfaceAvatar,interfaceType
     </sql>
 </mapper>

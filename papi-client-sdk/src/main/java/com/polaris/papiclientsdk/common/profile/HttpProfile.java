@@ -7,7 +7,7 @@ import lombok.Data;
  * @Create 2024-04-02 11:36
  * @Version 1.0
  * ClassName HttpProfile
- * Package com.polaris.papiclientsdk.common.profile
+ * Package com.polaris.papiclientsdk.utils.profile
  * Description
  */
 @Data

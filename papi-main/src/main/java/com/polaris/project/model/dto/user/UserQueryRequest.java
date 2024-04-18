@@ -1,6 +1,6 @@
 package com.polaris.project.model.dto.user;
 
-import com.polaris.project.common.PageRequest;
+import com.polaris.project.utils.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

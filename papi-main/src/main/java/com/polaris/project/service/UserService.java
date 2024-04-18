@@ -3,6 +3,8 @@ package com.polaris.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.polaris.common.entity.User;
+import com.polaris.project.model.dto.user.UserLoginRequest;
+import com.polaris.project.model.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,15 +25,15 @@ public interface UserService extends IService<User> {
      */
     long userRegister(String userAccount, String userPassword, String checkPassword);
 
+    User userLogin (UserLoginRequest userLoginRequest, HttpServletRequest request);
+
     /**
      * 用户登录
      *
-     * @param userAccount  用户账户
-     * @param userPassword 用户密码
-     * @param request
+     * @param userLoginRequest  用户登录 请求封装包含 userAccount userPassword
      * @return 脱敏后的用户信息
      */
-    User userLogin(String userAccount, String userPassword, HttpServletRequest request);
+    String userLogin(UserLoginRequest userLoginRequest);
 
     /**
      * 获取当前登录用户
@@ -39,7 +41,7 @@ public interface UserService extends IService<User> {
      * @param request
      * @return
      */
-    User getLoginUser(HttpServletRequest request);
+    UserVO getLoginUser(HttpServletRequest request);
 
     /**
      * 是否为管理员

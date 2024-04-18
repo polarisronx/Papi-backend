@@ -78,4 +78,13 @@ public class User implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public User (long id, String userName, String avatarUrl, String userRole){
+        this.id=id;
+        this.userName=userName;
+        this.userAvatar=avatarUrl;
+        this.userRole=userRole;
+    }
+
+    public User (){}
 }

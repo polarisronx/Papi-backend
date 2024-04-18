@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.polaris.common.entity.User;
+import com.polaris.common.exception.BusinessException;
+import com.polaris.common.exception.ErrorCode;
+import com.polaris.common.result.BaseResponse;
+import com.polaris.common.result.ResultUtils;
 import com.polaris.project.model.dto.user.*;
-import com.polaris.project.common.BaseResponse;
-import com.polaris.project.common.DeleteRequest;
-import com.polaris.project.common.ErrorCode;
-import com.polaris.project.common.ResultUtils;
-import com.polaris.project.exception.BusinessException;
+import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -64,7 +64,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public BaseResponse<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
+    public BaseResponse<String> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         if (userLoginRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -73,8 +73,8 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.userLogin(userAccount, userPassword, request);
-        return ResultUtils.success(user);
+        String token = userService.userLogin(userLoginRequest);
+        return ResultUtils.success(token);
     }
 
     /**
@@ -98,9 +98,9 @@ public class UserController {
      * @param request
      * @return
      */
-    @GetMapping("/get/login")
+    @GetMapping("/currentUser")
     public BaseResponse<UserVO> getLoginUser(HttpServletRequest request) {
-        User user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser(request);
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
         return ResultUtils.success(userVO);

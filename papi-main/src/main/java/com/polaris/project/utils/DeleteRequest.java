@@ -1,4 +1,4 @@
-package com.polaris.project.common;
+package com.polaris.project.utils;
 
 import lombok.Data;
 
