@@ -4,7 +4,10 @@ package com.polaris.project.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.polaris.common.entity.User;
 import com.polaris.project.model.dto.user.UserLoginRequest;
+import com.polaris.project.model.dto.user.UserLoginViaMailRequest;
+import com.polaris.project.model.dto.user.UserUpdateRequest;
 import com.polaris.project.model.vo.UserVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +28,8 @@ public interface UserService extends IService<User> {
      */
     long userRegister(String userAccount, String userPassword, String checkPassword);
 
+    long userQuickRegisterViaMail(String userAccount,String userMail, String code);
+
     User userLogin (UserLoginRequest userLoginRequest, HttpServletRequest request);
 
     /**
@@ -36,26 +41,36 @@ public interface UserService extends IService<User> {
     String userLogin(UserLoginRequest userLoginRequest);
 
     /**
+     * 用户邮箱验证登录
+     *
+     * @param userLoginViaMailRequest  用户登录 请求封装包含 userAccount userPassword
+     * @return 脱敏后的用户信息
+     */
+    String userLoginViaMail(UserLoginViaMailRequest userLoginViaMailRequest);
+
+    /**
      * 获取当前登录用户
      *
-     * @param request
      * @return
      */
-    UserVO getLoginUser(HttpServletRequest request);
+    UserVO getLoginUser();
 
     /**
      * 是否为管理员
      *
-     * @param request
      * @return
      */
-    boolean isAdmin(HttpServletRequest request);
+    boolean isAdmin();
 
     /**
      * 用户注销
      *
-     * @param request
-     * @return
      */
-    boolean userLogout(HttpServletRequest request);
+    boolean userLogout();
+
+    /**
+     * 更新用户信息
+     *
+     */
+    void updateUserInfo (MultipartFile multipartFile, UserUpdateRequest userUpdateRequest);
 }

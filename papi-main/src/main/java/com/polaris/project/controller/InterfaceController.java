@@ -72,7 +72,7 @@ public class InterfaceController {
         BeanUtils.copyProperties(interfaceInfoAddRequest, interfaceInfo);
         // 校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, true);
-        UserVO loginUser = userService.getLoginUser(request);
+        UserVO loginUser = userService.getLoginUser();
         interfaceInfo.setUserId(loginUser.getId());
         boolean result = interfaceInfoService.save(interfaceInfo);
         if (!result) {
@@ -94,7 +94,7 @@ public class InterfaceController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        UserVO user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser();
         long id = deleteRequest.getId();
         // 判断是否存在
         InterfaceInfo oldinterfaceInfo = interfaceInfoService.getById(id);
@@ -102,7 +102,7 @@ public class InterfaceController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         // 仅本人或管理员可删除
-        if (!oldinterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        if (!oldinterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin()) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         boolean b = interfaceInfoService.removeById(id);
@@ -126,7 +126,7 @@ public class InterfaceController {
         BeanUtils.copyProperties(interfaceInfoUpdateRequest, interfaceInfo);
         // 参数校验
         interfaceInfoService.validInterfaceInfo(interfaceInfo, false);
-        UserVO user = userService.getLoginUser(request);
+        UserVO user = userService.getLoginUser();
         long id = interfaceInfoUpdateRequest.getId();
         // 判断是否存在
         InterfaceInfo oldinterfaceInfo = interfaceInfoService.getById(id);
@@ -134,7 +134,7 @@ public class InterfaceController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         // 仅本人或管理员可修改
-        if (!oldinterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        if (!oldinterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin()) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         boolean result = interfaceInfoService.updateById(interfaceInfo);
@@ -319,7 +319,7 @@ public class InterfaceController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口未上线");
         }
         // 获取当前登录用户的AK和SK
-        UserVO loginUser = userService.getLoginUser(request);
+        UserVO loginUser = userService.getLoginUser();
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
         Credential credential = new Credential(accessKey, secretKey);

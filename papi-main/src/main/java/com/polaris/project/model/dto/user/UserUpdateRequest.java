@@ -12,10 +12,6 @@ import java.io.Serializable;
  */
 @Data
 public class UserUpdateRequest implements Serializable {
-    /**
-     * id
-     */
-    private Long id;
 
     /**
      * 用户昵称
@@ -36,11 +32,6 @@ public class UserUpdateRequest implements Serializable {
      * 性别
      */
     private Integer gender;
-
-    /**
-     * 用户角色: user, admin
-     */
-    private String userRole;
 
     /**
      * 密码

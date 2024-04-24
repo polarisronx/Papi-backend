@@ -17,6 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.polaris.project.mapper")
 @EnableDubbo
 public class PapiMain {
+
+
     public static void main(String[] args) {
         SpringApplication.run(PapiMain.class, args);
     }
