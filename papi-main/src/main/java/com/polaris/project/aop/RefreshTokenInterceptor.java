@@ -36,8 +36,8 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 预请求
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+        // 预请求直接放行
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             return true;
         }
