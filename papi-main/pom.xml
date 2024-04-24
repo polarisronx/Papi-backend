@@ -13,6 +13,18 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--nacos-config-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2021.1</version>
+        </dependency>
+        <!--需要引入该jar才能使bootstrap配置文件生效-->
+        <!--新版的SpringCloud默认没有安装bootstrap依赖，因此不能读取项目bootstrap.yml文件内容-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -25,6 +37,11 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
+        </dependency>
+        <!--邮箱依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
@@ -80,8 +97,21 @@
         <!-- https://doc.xiaominfo.com/knife4j/documentation/get_start.html-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+       <!-- 需要搭配这个jar包 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <!--保持版本与Knife4j v4.0的版本一致，避免jar包冲突，因为Knife4j-v4.0.0版本依赖的springdoc版本是1.6.9 -->
+            <version>1.6.9</version>
+        </dependency>
+        <!-- 阿里云对象存储 -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

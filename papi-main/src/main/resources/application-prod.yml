@@ -1,6 +1,24 @@
+host:
+  nacos: 110.41.167.152:8848
+  tailscale: 100.72.207.93
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/openAPI
-    username: root
-    password: 123456
+  application:
+    name: papi-main
+  cloud:
+    nacos:
+      config:
+        server-addr: ${host.nacos}
+        namespace: 4d14baf4-5399-4112-b5db-405f93bff4e9
+        group: ${spring.profiles.active}
+        file-extension: yaml
+        prefix: ${spring.application.name}
+      discovery:
+        server-addr: ${host.nacos}
+        group: ${spring.profiles.active}
+        namespace: 4d14baf4-5399-4112-b5db-405f93bff4e9
+        ip: ${host.tailscale}
+        network-interface: net7
+server:
+  port: 7529
+  servlet:
+    context-path: /api

@@ -1,0 +1,58 @@
+server:
+  port: 7529
+  servlet:
+    context-path: /api
+host:
+  nacos: 127.0.0.1:8848
+spring:
+  application:
+    name: papi-main
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: ${host.nacos}
+        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+        group: ${spring.profiles.active}
+        file-extension: yaml
+        extension-configs:
+          - data-id: papi-main-dev.yaml
+            group: ${spring.profiles.active}
+            refresh: true
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  # session 失效时间（分钟）
+  session:
+    timeout: 86400
+    store-type: redis #redis 从Redis读写session none 表示存储在单台服务器
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+debug: true
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: default
+      paths-to-match: '/**'
+      packages-to-scan: com.polaris.project.controller
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
