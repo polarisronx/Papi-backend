@@ -30,7 +30,7 @@ public class UserAddRequest implements Serializable {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 用户角色: user, admin

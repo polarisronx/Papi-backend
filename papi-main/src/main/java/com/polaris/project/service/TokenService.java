@@ -20,4 +20,5 @@ public interface TokenService {
     User validateToken(String token);
     void removeToken(long id);
     boolean isTokenExpired(String token) throws MalformedClaimException, InvalidJwtException, JoseException;
+    User getUserFromToken (String token) throws MalformedClaimException;
 }

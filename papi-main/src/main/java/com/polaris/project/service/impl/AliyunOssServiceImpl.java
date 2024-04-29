@@ -1,12 +1,13 @@
 package com.polaris.project.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.RandomUtil;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
 
 import com.polaris.project.config.AliyunOssConfig;
-import com.polaris.project.model.dto.user.FileDTO;
+import com.polaris.project.model.dto.user.UploadResult;
 
 import com.polaris.project.service.AliyunOssService;
 import com.polaris.project.utils.UserHolder;
@@ -48,7 +49,7 @@ public class AliyunOssServiceImpl implements AliyunOssService {
      * @return
      */
     @Override
-    public FileDTO uploadImage(MultipartFile uploadFile) {
+    public UploadResult uploadImage(MultipartFile uploadFile) {
         // 校验图片格式
         boolean isLegal = false;
         for (String type : IMAGE_TYPES) {
@@ -58,7 +59,7 @@ public class AliyunOssServiceImpl implements AliyunOssService {
             }
         }
         // 封装Result对象，并且将文件的byte数组放置到result对象中
-        FileDTO fileUploadDto = new FileDTO();
+        UploadResult fileUploadDto = new UploadResult();
         if (!isLegal) {
             fileUploadDto.setStatus("error");
             return fileUploadDto;
@@ -72,7 +73,7 @@ public class AliyunOssServiceImpl implements AliyunOssService {
             InputStream inputStream = new ByteArrayInputStream(imageData);
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(imageData.length);
-            PutObjectResult putObjectResult = ossClient.putObject(aliyunOssConfig.getBucket(), newFileName, inputStream, metadata);
+            PutObjectResult putObjectResult = ossClient.putObject(aliyunOssConfig.getBucket(), newFileName, inputStream, metadata);//arg1:bucket名称,arg2:上传到的路径和文件名,arg3:上传文件流,arg4:文件元信息
             log.info(String.valueOf(putObjectResult));
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -85,6 +86,7 @@ public class AliyunOssServiceImpl implements AliyunOssService {
         // 文件路径需要保存到数据库
         fileUploadDto.setName(newFileName);
         fileUploadDto.setUid(String.valueOf(System.currentTimeMillis()));
+        fileUploadDto.setUrl(aliyunOssConfig.getPrefix() + newFileName);
         return fileUploadDto;
     }
 
@@ -96,7 +98,7 @@ public class AliyunOssServiceImpl implements AliyunOssService {
      */
     private String getFilePath(String sourceFileName) {
         Long userId = UserHolder.getUser().getId();
-        return "TurboAPI/" + "user-" + userId + RandomUtil.randomInt(100, 9999) + "."
+        return "papi/" +new DateTime().toString("yyyy/MM/dd")+ "/user-" + userId + RandomUtil.randomInt(100, 9999) + "."
                 + StringUtils.substringAfterLast(sourceFileName, ".");
     }
 }

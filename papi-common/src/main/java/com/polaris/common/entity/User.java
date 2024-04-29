@@ -24,7 +24,17 @@ public class User implements Serializable {
      * 用户昵称
      */
     private String userName;
+    /**
+     * 联系电话
+     */
+    @TableField(value = "userPhone")
+    private String userPhone;
 
+    /**
+     * 个人简介
+     */
+    @TableField(value = "intro")
+    private String intro;
     /**
      * 用户邮箱
      */
@@ -53,7 +63,7 @@ public class User implements Serializable {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 用户角色: user, admin
@@ -84,9 +94,10 @@ public class User implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public User (long id, String userName, String avatarUrl, String userRole){
+    public User (long id,String userAccount, String userName, String avatarUrl, String userRole){
         this.id=id;
         this.userName=userName;
+        this.userAccount =  userAccount;
         this.userAvatar=avatarUrl;
         this.userRole=userRole;
     }

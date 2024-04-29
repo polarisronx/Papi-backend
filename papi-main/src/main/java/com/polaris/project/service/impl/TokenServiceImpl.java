@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import java.security.PrivateKey;
 import java.util.concurrent.TimeUnit;
 
+import static com.polaris.common.exception.ThrowUtils.throwIf;
 import static com.polaris.project.constant.TokenConstant.*;
 
 /**
@@ -65,9 +66,9 @@ public class TokenServiceImpl implements TokenService {
             //IssuedAt time 签发时间
             NumericDate date = NumericDate.now();
             claims.setIssuedAt(date);
-            //expire time 过期时间
-            date.addSeconds(ACCESS_TOKEN_EXPIRATION_TIME);
-            claims.setExpirationTime(date);
+//            //expire time 过期时间
+//            date.addSeconds(ACCESS_TOKEN_EXPIRATION_TIME);
+//            claims.setExpirationTime(date);
             // 生效时间
             claims.setNotBeforeMinutesInThePast(1);
             // Subject 面向的用户
@@ -117,7 +118,7 @@ public class TokenServiceImpl implements TokenService {
             //IssuedAt time 签发时间
             NumericDate date = NumericDate.now();
             claims.setIssuedAt(date);
-            //expire time 过期时间
+//            expire time 过期时间
             date.addSeconds(REFRESH_TOKEN_EXPIRATION_TIME);
             claims.setExpirationTime(date);
             // 生效时间
@@ -166,7 +167,7 @@ public class TokenServiceImpl implements TokenService {
             String storedToken = stringRedisTemplate.opsForValue().get(key);
             if (storedToken != null && storedToken.equals(token)) {
                 // 如果Redis中存储的令牌与传入的令牌匹配，则验证通过
-                return new User(Long.parseLong(userId), userName ,avatarUrl,userRole);
+                return new User(Long.parseLong(userId), account, userName ,avatarUrl,userRole);
             }
         } catch (Exception e) {
             // 解析过程中发生异常，验证失败
@@ -179,7 +180,7 @@ public class TokenServiceImpl implements TokenService {
     private static JwtClaims getJwtClaims (String token){
         try {
             JwtConsumer consumer = new JwtConsumerBuilder()
-                    .setRequireExpirationTime()
+//                    .setRequireExpirationTime()
                     .setMaxFutureValidityInMinutes(MAX_FUTURE_VALIDITY_IN_MINUTES)
                     .setAllowedClockSkewInSeconds(ALLOWED_CLOCK_SKEW_IN_SECONDS)
                     .setRequireSubject()
@@ -211,10 +212,25 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public boolean isTokenExpired (String token) throws MalformedClaimException, InvalidJwtException, JoseException{
         JwtClaims claims = getJwtClaims(token);
-        return claims.getExpirationTime().isBefore(NumericDate.now());
+        NumericDate expirationTime = claims.getIssuedAt();
+        expirationTime.addSeconds(ACCESS_TOKEN_EXPIRATION_TIME);
+        return expirationTime.isBefore(NumericDate.now());
+    }
+    @Override
+    public User getUserFromToken(String token) throws MalformedClaimException{
+        throwIf(token == null, ErrorCode.PARAMS_ERROR,"token不能为空");
+        JwtClaims claims = getJwtClaims(token);
+        // 取出token中的用户信息
+        String userId = claims.getSubject();
+        String avatarUrl = (String) claims.getClaimValue("avatar_url") ;
+        String userRole = (String) claims.getClaimValue("role");
+        String account = (String)claims.getClaimValue("account");
+        String userName = (String)claims.getClaimValue("username");
+        return new User(Long.parseLong(userId), account, userName ,avatarUrl,userRole);
     }
 
-    /**
+
+   /**
      * @description 创建JWT的公钥、秘钥
      * createKeyPair 用来生成唯一的keyId 通过uuid 创建公钥和私钥。这个方法只要在本地运行就好了不用在线上执行。
      * 只要keyId、公钥和私钥没有被泄漏可以一直用，不用再次执行这个方法。

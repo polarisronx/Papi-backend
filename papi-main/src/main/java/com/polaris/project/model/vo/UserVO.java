@@ -1,5 +1,6 @@
 package com.polaris.project.model.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,7 +22,15 @@ public class UserVO implements Serializable {
      * 用户昵称
      */
     private String userName;
+    /**
+     * 联系电话
+     */
+    private String userPhone;
 
+    /**
+     * 个人简介
+     */
+    private String intro;
     /**
      * 账号
      */
@@ -35,7 +44,7 @@ public class UserVO implements Serializable {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 用户角色: user, admin
@@ -50,6 +59,11 @@ public class UserVO implements Serializable {
      * SK
      */
     private String secretKey;
+
+    /**
+     * SK
+     */
+    private String userMail;
 
     /**
      * 创建时间

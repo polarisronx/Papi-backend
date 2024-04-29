@@ -1,6 +1,5 @@
 package com.polaris.project.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
@@ -14,7 +13,6 @@ import com.polaris.project.service.AliyunOssService;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
-import com.polaris.project.utils.UserHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -41,7 +39,8 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
+    @Resource
+    private AliyunOssService aliyunOssService;
     // region 登录相关
 
     /**
@@ -208,12 +207,21 @@ public class UserController {
      */
     @PostMapping("/update")
     @Operation(summary = "更新用户信息")
-    public BaseResponse<String> updateUserInfo(@RequestPart(value = "file", required = false) MultipartFile multipartFile,
-                                               UserUpdateRequest userUpdateRequest) {
-        userService.updateUserInfo(multipartFile,userUpdateRequest);
-        return ResultUtils.success("更新成功!");
+    public BaseResponse<UserVO> updateUserInfo(UserUpdateRequest userUpdateRequest) {
+        throwIf(userUpdateRequest == null, new BusinessException(ErrorCode.NOT_FOUND_ERROR));
+        UserVO userVO = userService.updateUserInfo(userUpdateRequest);
+        return ResultUtils.success(userVO,"更新成功");
     }
-
+    @PostMapping("/upload/avatar")
+    @Operation(summary = "上传用户头像")
+    public BaseResponse<UploadResult> uploadAvatar(@RequestPart(value = "file") MultipartFile multipartFile) {
+        UploadResult result;
+        throwIf(multipartFile == null,ErrorCode.NOT_FOUND_ERROR,"头像不存在");
+        // 执行更新用户图像操作
+        result = aliyunOssService.uploadImage(multipartFile);
+        throwIf(result.getStatus().equals("error"), ErrorCode.SYSTEM_ERROR, "上传头像失败!");
+        return ResultUtils.success(result);
+    }
 
 
     /**

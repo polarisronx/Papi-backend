@@ -72,5 +72,5 @@ public interface UserService extends IService<User> {
      * 更新用户信息
      *
      */
-    void updateUserInfo (MultipartFile multipartFile, UserUpdateRequest userUpdateRequest);
+    UserVO updateUserInfo (UserUpdateRequest userUpdateRequest);
 }

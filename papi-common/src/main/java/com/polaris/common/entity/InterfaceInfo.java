@@ -53,6 +53,11 @@ public class InterfaceInfo implements Serializable {
      */
     private String requestParams;
     /**
+     * 响应参数
+     */
+    @TableField(value = "ResponseParams")
+    private Integer responseParams;
+    /**
      * 接口示意图
      */
     @TableField(value = "interfaceAvatar")
@@ -64,19 +69,24 @@ public class InterfaceInfo implements Serializable {
     @TableField(value = "interfaceType")
     private Integer interfaceType;
 
-    /**
-     * 请求头
-     */
-    private String requestHeader;
+
 
     /**
-     * 响应头
+     * 请求参数类型
      */
-    private String responseHeader;
+    @TableField(value = "requestType")
+    private String requestType;
+
+    /**
+     * 响应类型
+     */
+    @TableField(value = "responseType")
+    private String responseType;
 
     /**
      * 接口状态（0-关闭，1-开启）
      */
+    @TableField(value = "status")
     private Integer status;
 
     /**

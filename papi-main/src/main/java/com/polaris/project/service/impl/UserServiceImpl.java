@@ -47,8 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private TokenService tokenService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private AliyunOssService aliyunOssService;
+
 
     /**
      * 盐值，混淆密码
@@ -243,19 +242,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return true;
     }
     @Override
-    public void updateUserInfo(MultipartFile multipartFile, UserUpdateRequest userUpdateRequest) {
-        if (multipartFile != null) {
-            // 执行更新用户图像操作
-            FileDTO result = aliyunOssService.uploadImage(multipartFile);
-            throwIf(result.getStatus().equals("error"), ErrorCode.SYSTEM_ERROR, "上传头像失败!");
-            String url = result.getName();
-            userUpdateRequest.setUserAvatar(url);
-        }
+    public UserVO updateUserInfo(UserUpdateRequest userUpdateRequest) {
+
         User userEntity = BeanUtil.copyProperties(userUpdateRequest, User.class);
         UserDTO user = UserHolder.getUser();
         userEntity.setId(user.getId());
         boolean b = updateById(userEntity);
         throwIf(!b, ErrorCode.SYSTEM_ERROR, "更新用户信息失败!");
+        UserVO userVO = new UserVO();
+        BeanUtil.copyProperties(userEntity, userVO);
+        UserHolder.saveUser(BeanUtil.copyProperties(userVO, UserDTO.class));
+        return userVO;
     }
 
 }

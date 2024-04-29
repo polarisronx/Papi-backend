@@ -42,35 +42,33 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization"); //从请求头中获取JWT access_token
-        String s = request.getHeader("User-Agent");
         if(StringUtils.isEmpty(token)){
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR,"尚未登录！");
         }
         try {
             // 校验token是否有效
             boolean isTokenExpired = tokenService.isTokenExpired(token);
-            User user = tokenService.validateToken(token);
+
             if(isTokenExpired){
                 // 如果token过期 , 那么需要通过refresh_token生成一个新的access_token
-                String refreshTokenKey = TokenConstant.REFRESH_TOKEN_PREFIX+ user.getId();
+                User userFromAT = tokenService.getUserFromToken(token);
+                String refreshTokenKey = TokenConstant.REFRESH_TOKEN_PREFIX+ userFromAT.getId();
                 String refreshToken = stringRedisTemplate.opsForValue().get(refreshTokenKey);
                 if(StringUtils.isEmpty(refreshToken)){
-                    throw new BusinessException(ErrorCode.SYSTEM_ERROR,"RefreshToken丢失");
-                }
-                if(tokenService.isTokenExpired(refreshToken)){
                     throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR,"登录状态过期, 请重新登录");
                 }
                 // 生成新的accessToken , 同时保存到redis
-                String accessToken = tokenService.createAccessToken(user);
-                String accessTokenKey = TokenConstant.ACCESS_TOKEN_PREFIX +user.getId();
+                String accessToken = tokenService.createAccessToken(userFromAT);
+                String accessTokenKey = TokenConstant.ACCESS_TOKEN_PREFIX +userFromAT.getId();
                 stringRedisTemplate.opsForValue().set(accessTokenKey,accessToken,
                         TokenConstant.ACCESS_TOKEN_EXPIRATION_TIME, TimeUnit.SECONDS);
 
                 // 无感刷新token, 在线程域ThreadLocal中添加用户信息UserDTO
-                UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
+                UserDTO userDTO = BeanUtil.copyProperties(userFromAT, UserDTO.class);
                 UserHolder.saveUser(userDTO);
             }else{
-                // 如果token没有过期, 那么直接添加用户的数据
+                // 如果token没有过期, 校验token是否有效。然后添加用户的数据
+                User user = tokenService.validateToken(token);
                 UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
                 UserHolder.saveUser(userDTO);
             }

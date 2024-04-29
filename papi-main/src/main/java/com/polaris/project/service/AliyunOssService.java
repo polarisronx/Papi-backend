@@ -1,8 +1,6 @@
 package com.polaris.project.service;
 
-import com.polaris.common.entity.User;
-import com.polaris.project.model.dto.user.FileDTO;
-import com.polaris.project.model.dto.user.UserUpdateRequest;
+import com.polaris.project.model.dto.user.UploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -14,5 +12,5 @@ import org.springframework.web.multipart.MultipartFile;
  * @create 2024-04-24 14:03
  */
 public interface AliyunOssService {
-    FileDTO uploadImage(MultipartFile uploadFile);
+    UploadResult uploadImage(MultipartFile uploadFile);
 }

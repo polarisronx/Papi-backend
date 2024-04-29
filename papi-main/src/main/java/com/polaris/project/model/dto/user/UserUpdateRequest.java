@@ -18,10 +18,10 @@ public class UserUpdateRequest implements Serializable {
      */
     private String userName;
 
-    /**
-     * 账号
-     */
-    private String userAccount;
+//    /**
+//     * 账号
+//     */
+//    private String userAccount;
 
     /**
      * 用户头像
@@ -31,13 +31,22 @@ public class UserUpdateRequest implements Serializable {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
+//    /**
+//     * 密码
+//     */
+//    private String userPassword;
     /**
-     * 密码
+     * 个人简介
      */
-    private String userPassword;
+    @TableField(value = "intro")
+    private String intro;
+    /**
+     * 用户联系方式
+     */
+    private String userPhone;
 
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1436336678L;
 }
