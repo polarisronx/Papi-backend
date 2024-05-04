@@ -17,7 +17,7 @@ public class InterfaceInfo implements Serializable {
     /**
      * 主键
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -56,7 +56,20 @@ public class InterfaceInfo implements Serializable {
      * 响应参数
      */
     @TableField(value = "ResponseParams")
-    private Integer responseParams;
+    private String responseParams;
+
+    /**
+     * 请求参数封装类
+     */
+    @TableField(value = "requestClass")
+    private String requestClass;
+
+    /**
+     * 响应参数封装类
+     */
+    @TableField(value = "responseClass")
+    private String responseClass;
+
     /**
      * 接口示意图
      */
@@ -84,7 +97,7 @@ public class InterfaceInfo implements Serializable {
     private String responseType;
 
     /**
-     * 接口状态（0-关闭，1-开启）
+     * 接口状态（0-关闭，1-开启，2-审核中，3-审核不通过，4-审核通过）
      */
     @TableField(value = "status")
     private Integer status;
