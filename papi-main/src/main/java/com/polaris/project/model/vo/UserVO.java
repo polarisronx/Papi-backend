@@ -56,6 +56,15 @@ public class UserVO implements Serializable {
     private String accessKey;
 
     /**
+     * 用户称号，用户头衔，用户职位
+     */
+    private String userTitle;
+
+    /**
+     * 用户所属部门、团队
+     */
+    private String userGroup;
+    /**
      * SK
      */
     private String secretKey;

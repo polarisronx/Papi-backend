@@ -17,7 +17,7 @@ public class User implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -35,15 +35,28 @@ public class User implements Serializable {
      */
     @TableField(value = "intro")
     private String intro;
+
     /**
      * 用户邮箱
      */
     private String userMail;
+
     /**
      * 账号
      */
-
     private String userAccount;
+
+    /**
+     * 用户称号，用户头衔，用户职位
+     */
+    @TableField(value = "userTitle")
+    private String userTitle;
+
+    /**
+     * 用户所属部门、团队
+     */
+    @TableField(value = "userGroup")
+    private String userGroup;
 
     /**
      * 用户头像
