@@ -3,7 +3,8 @@ server:
   servlet:
     context-path: /api
 host:
-  nacos: 127.0.0.1:8848
+#  nacos: 127.0.0.1:8848 本地nacos
+  nacos: 106.15.79.18:8848
 spring:
   application:
     name: papi-main
@@ -13,7 +14,8 @@ spring:
     nacos:
       config:
         server-addr: ${host.nacos}
-        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+#        namespace: b765d215-8484-45ec-a86f-07048c01dd47 本地nacos
+        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
         group: ${spring.profiles.active}
         file-extension: yaml
         extension-configs:

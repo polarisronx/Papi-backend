@@ -4,8 +4,10 @@ package com.polaris.apiinterface.controller;
 import java.util.Arrays;
 
 
-import com.polaris.papiclientsdk.model.User;
-import com.polaris.papiclientsdk.utils.SignUtils;
+import cn.hutool.json.JSONUtil;
+import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost2Request;
+import com.polaris.papiclientsdk.basicapi.model.response.GetNameByPostResponse;
+
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,36 +36,7 @@ public class NameController {
         return "Hello!We've post your name: "+name;
     }
     @PostMapping("/c")
-    public String getNameByPost2(@RequestBody User user){
-//        // 从请求头中获取 签名认证的参数 的值
-//        String accessKey = request.getHeader("accessKey");
-////        String secretKey = request.getHeader("secretKey"); 不能直接获取获取到密钥
-//        String body = request.getHeader("body");
-//        String timestamp = request.getHeader("timestamp");
-//        String nonce = request.getHeader("nonce");
-//        String sign = request.getHeader("sign");
-//
-//        // 进行 权限校验 的验证逻辑
-//        // 校验 accessKey
-//        if (!accessKey.equals("polaris")){// 实际上后端的 accessKey 要从数据库中查，这里图方便就直接写死了
-//            // 抛出运行时异常，表示权限不足
-//            throw new RuntimeException("权限不足");
-//        }
-//        // 校验随机数 nonce
-//        if (Long.parseLong(nonce) > 10000){
-//            throw new RuntimeException("无权限");
-//        }
-//        // 校验时间戳 timestamp 与 当前时间的差距，超过5分钟说明过期
-//        if (Math.abs(System.currentTimeMillis()/1000 - Long.parseLong(timestamp)) > 5 * 60){
-//            throw new RuntimeException("请求过期");
-//        }
-//        // 校验签名 sign
-//        // 假设 secretKey 为 "polaris"， 这里只是简单示例，实际应用中需要从数据库中查
-//        String expectedSign = SignUtils.genSign(body,"abcdefgh");
-//        if (!sign.equals(expectedSign)){
-//            throw new RuntimeException("签名错误");
-//        }
-        String result = "Hello!We've post your name: " + user.getUsername();
-        return result;
+    public GetNameByPostResponse getNameByPost2(@RequestBody GetNameByPost2Request request){
+        return JSONUtil.toBean(JSONUtil.toJsonStr(request), GetNameByPostResponse.class);
     }
 }

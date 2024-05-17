@@ -22,7 +22,9 @@
         <result property="action" column="action" jdbcType="VARCHAR"/>
         <result property="interfaceAvatar" column="interfaceAvatar" jdbcType="VARCHAR"/>
         <result property="interfaceType" column="interfaceType" jdbcType="INTEGER"/>
-        <result property="responseParams" column="ResponseParams" jdbcType="INTEGER"/>
+        <result property="responseParams" column="ResponseParams" jdbcType="VARCHAR"/>
+        <result property="requestClass" column="requestClass" jdbcType="VARCHAR"/>
+        <result property="responseClass" column="responseClass" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -31,6 +33,7 @@
         responseType,status,method,
         userId,createTime,updateTime,
         isDelete,path,action,
-        interfaceAvatar,interfaceType,ResponseParams
+        interfaceAvatar,interfaceType,ResponseParams,
+        requestClass,responseClass
     </sql>
 </mapper>

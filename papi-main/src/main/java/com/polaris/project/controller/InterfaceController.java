@@ -192,7 +192,7 @@ public class InterfaceController {
         long size = interfaceInfoQueryRequest.getPageSize();
         String sortField = interfaceInfoQueryRequest.getSortField();
         String sortOrder = interfaceInfoQueryRequest.getSortOrder();
-        String description = interfaceInfoQuery.getDescription();
+        Integer status = interfaceInfoQuery.getStatus();
         String interfaceName = interfaceInfoQuery.getName();
         // description 需支持模糊搜索
         interfaceInfoQuery.setDescription(null);
@@ -201,7 +201,7 @@ public class InterfaceController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
-
+        if (status!=null) queryWrapper.eq("status", status);
         queryWrapper.like(StringUtils.isNotBlank(interfaceName), "name", interfaceName);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
@@ -209,8 +209,39 @@ public class InterfaceController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
-    @Resource
-    private PapiClient papiClient;
+
+    /**
+     * 分页获取用户发布的接口列表
+     *
+     * @param interfaceInfoQueryRequest
+     * @return
+     */
+    @GetMapping("/list/yourAPI")
+    public BaseResponse<Page<InterfaceInfo>> listUserInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest) {
+        if (interfaceInfoQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        InterfaceInfo interfaceInfoQuery = new InterfaceInfo();
+        BeanUtils.copyProperties(interfaceInfoQueryRequest, interfaceInfoQuery);
+        long current = interfaceInfoQueryRequest.getCurrent();
+        long size = interfaceInfoQueryRequest.getPageSize();
+        String sortField = interfaceInfoQueryRequest.getSortField();
+        String sortOrder = interfaceInfoQueryRequest.getSortOrder();
+        Long ownerId = interfaceInfoQuery.getUserId();
+        String interfaceName = interfaceInfoQuery.getName();
+
+        // 限制爬虫
+        if (size > 50) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.eq(StringUtils.isNotBlank(interfaceName), "userId", ownerId);
+        queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
+                sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
+        Page<InterfaceInfo> interfaceInfoPage = interfaceInfoService.page(new Page<>(current, size), queryWrapper);
+        return ResultUtils.success(interfaceInfoPage);
+    }
 
     /**
      * 上线接口
@@ -235,16 +266,8 @@ public class InterfaceController {
         if (oldInterfaceInfo == null){
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 2 测试接口是否可以使用
-        // 测试用模拟数据
-        // todo 暂不支持测试是否可用
-//        com.polaris.papiclientsdk.model.User user = new com.polaris.papiclientsdk.model.User();
-//        user.setUsername("test_user");
-//        String nameByPost = papiClient.getNameByPost2(user);
-//        if (StringUtils.isBlank(nameByPost)){
-//            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口服务不可用");
-//        }
-        // 3 更新接口的状态 status
+
+        // 2 更新接口的状态 status
         // 新建一个接口对象
         InterfaceInfo interfaceInfo = new InterfaceInfo();
         interfaceInfo.setId(id);
@@ -292,6 +315,8 @@ public class InterfaceController {
         return ResultUtils.success(result);
     }
 
+
+
     /**
      * 接口测试调用
      *
@@ -301,7 +326,7 @@ public class InterfaceController {
      */
     @PostMapping("/Invoke")
     public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInvokeRequest interfaceInvokeRequest,
-                                                      HttpServletRequest request) throws PapiClientSDKException, IllegalAccessException, NoSuchMethodException, InvocationTargetException{
+                                                      HttpServletRequest request) {
         // 校验参数是否为空
         if (interfaceInvokeRequest == null || interfaceInvokeRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

@@ -1,24 +1,28 @@
-host:
-  nacos: 110.41.167.152:8848
-  tailscale: 100.72.207.93
 spring:
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.15.79.18:3306/papi?serverTimezone=Asia/Shanghai
+    username: papi
+    password: 907830201
+  # redis 配置
+  redis:
+    port: 6379
+    host: 106.15.79.18
+    database: 0
+    password: 123456
+dubbo:
   application:
     name: papi-main
-  cloud:
-    nacos:
-      config:
-        server-addr: ${host.nacos}
-        namespace: 4d14baf4-5399-4112-b5db-405f93bff4e9
-        group: ${spring.profiles.active}
-        file-extension: yaml
-        prefix: ${spring.application.name}
-      discovery:
-        server-addr: ${host.nacos}
-        group: ${spring.profiles.active}
-        namespace: 4d14baf4-5399-4112-b5db-405f93bff4e9
-        ip: ${host.tailscale}
-        network-interface: net7
-server:
-  port: 7529
-  servlet:
-    context-path: /api
+  # 设置dubbo的协议为dubbo，随机分配端口
+  protocol:
+    name: dubbo
+    port: 22221
+  registry:
+    # 配置注册中心为 nacos，使用的地址是 nacos://127.0.0.1:8848
+    id: nacos-registry
+    address: nacos://${host.nacos}
+    parameters:
+      # 注意 这里要在 nacos 创建名为 dubbo 的 namespace 环境
+      namespace: 0850d63f-ea6a-4b57-8f5c-10ed248eb696
+#      group: ${spring.profiles.active} Param 'group' is illegal
