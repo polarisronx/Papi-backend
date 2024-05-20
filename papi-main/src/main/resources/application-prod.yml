@@ -2,15 +2,15 @@ spring:
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.15.79.18:3306/papi?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://172.28.16.169:3306/papi?serverTimezone=Asia/Shanghai
     username: papi
     password: 907830201
   # redis 配置
   redis:
     port: 6379
-    host: 106.15.79.18
+    host: 172.28.16.169
     database: 0
-    password: 123456
+    password: 907830201
 dubbo:
   application:
     name: papi-main

@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: papi-route
+          uri: http://106.15.79.18:8123
+          predicates:
+            - Path=/api/**
+host:
+  nacos: 172.28.16.169:8848
+
+dubbo:
+  application:
+    name: papi-gateway
+  # 设置dubbo的协议为dubbo，随机分配端口
+    qos:
+      enable: false
+  protocol:
+    name: dubbo
+    port: 22223
+  registry:
+    # 配置注册中心为 nacos，使用的地址是 nacos://127.0.0.1:8848
+    id: nacos-registry
+    address: nacos://${host.nacos}
+    parameters:
+      # 注意 这里要在 nacos 创建名为 dubbo 的 namespace 环境
+      namespace: 0850d63f-ea6a-4b57-8f5c-10ed248eb696
+
+server:
+  port: 8090

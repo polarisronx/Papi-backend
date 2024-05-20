@@ -5,21 +5,36 @@ server:
 host:
 #  nacos: 127.0.0.1:8848 本地nacos
   nacos: 106.15.79.18:8848
+  # 部署版本必改1
+#  nacos: 172.28.16.169:8848
+  # 服务器环境用内网ip
 spring:
   application:
     name: papi-main
   profiles:
     active: dev
+    # 部署版本注释内容
   cloud:
     nacos:
+      discovery:
+        server-addr: ${host.nacos}
+        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
+        group: ${spring.profiles.active}
+        username: nacos
+        password: nacos
       config:
         server-addr: ${host.nacos}
 #        namespace: b765d215-8484-45ec-a86f-07048c01dd47 本地nacos
         namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
+        #服务器dev
+#        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        # 部署版本必改2
         group: ${spring.profiles.active}
         file-extension: yaml
         extension-configs:
+#          - data-id: papi-main-prod.yaml
           - data-id: papi-main-dev.yaml
+            # 部署版本必改3
             group: ${spring.profiles.active}
             refresh: true
   main:
