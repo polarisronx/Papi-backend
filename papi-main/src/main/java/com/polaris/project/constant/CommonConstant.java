@@ -16,4 +16,9 @@ public interface CommonConstant {
      * 降序
      */
     String SORT_ORDER_DESC = " descend";
+
+    /**
+     * 签到奖励积分
+     */
+    Integer SIGN_IN_REWARD = 5;
 }

@@ -41,6 +41,12 @@ public class InterfaceInfo implements Serializable {
     private String path;
 
     /**
+     * costs per invoke
+     */
+    @TableField(value = "costs")
+    private Integer costs;
+
+    /**
      * 操作
      */
     private String action;

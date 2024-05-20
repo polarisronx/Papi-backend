@@ -5,7 +5,7 @@ import com.polaris.common.entity.User;
 
 
 /**
- * @Entity com.polaris.project.model.domain.User
+ * @Entity com.polaris.common.entity.User
  */
 public interface UserMapper extends BaseMapper<User> {
 

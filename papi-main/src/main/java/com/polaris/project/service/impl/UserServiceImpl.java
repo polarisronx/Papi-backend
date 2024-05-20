@@ -11,7 +11,6 @@ import com.polaris.common.exception.ErrorCode;
 import com.polaris.project.mapper.UserMapper;
 import com.polaris.project.model.dto.user.*;
 import com.polaris.project.model.vo.UserVO;
-import com.polaris.project.service.AliyunOssService;
 import com.polaris.project.service.TokenService;
 import com.polaris.project.service.UserService;
 import com.polaris.project.utils.UserHolder;
@@ -20,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -253,6 +251,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtil.copyProperties(userEntity, userVO);
         UserHolder.saveUser(BeanUtil.copyProperties(userVO, UserDTO.class));
         return userVO;
+    }
+
+    @Override
+    public boolean updatePoint (Integer addPoint){
+        Long userId = UserHolder.getUser().getId();
+        User user = getById(userId);
+        user.setPoints(user.getPoints()+addPoint);
+        boolean res = updateById(user);
+        return res;
     }
 
 }

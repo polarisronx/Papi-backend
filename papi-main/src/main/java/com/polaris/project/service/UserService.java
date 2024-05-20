@@ -73,4 +73,11 @@ public interface UserService extends IService<User> {
      *
      */
     UserVO updateUserInfo (UserUpdateRequest userUpdateRequest);
+
+    /**
+     * 更新用户积分
+     *
+     */
+    boolean updatePoint (Integer addPoint);
+
 }

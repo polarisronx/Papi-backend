@@ -22,6 +22,7 @@
         <result property="intro" column="intro" jdbcType="VARCHAR"/>
         <result property="userTitle" column="userTitle" jdbcType="VARCHAR"/>
         <result property="userGroup" column="userGroup" jdbcType="VARCHAR"/>
+        <result property="points" column="points" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -29,6 +30,6 @@
         userAvatar,gender,userRole,
         userPassword,createTime,updateTime,
         isDelete,accessKey,secretKey,userMail,userPhone,intro,
-        userTitle,userGroup
+        userTitle,userGroup,points
     </sql>
 </mapper>

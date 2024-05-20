@@ -23,12 +23,6 @@ import java.util.Date;
 public class InterfaceInfoQueryRequest extends PageRequest implements Serializable {
 
     /**
-     * 主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
-
-    /**
      * 名称
      */
     private String name;
@@ -39,9 +33,24 @@ public class InterfaceInfoQueryRequest extends PageRequest implements Serializab
     private String description;
 
     /**
-     * 接口地址
+     * 接口头像
      */
-    private String url;
+    private String interfaceAvatar;
+
+    /**
+     * 服务终端
+     */
+    private String endpoint;
+
+    /**
+     * 所有者
+     */
+    private Long userID;
+
+    /**
+     * 接口路径
+     */
+    private String path;
 
     /**
      * 请求参数
@@ -49,45 +58,49 @@ public class InterfaceInfoQueryRequest extends PageRequest implements Serializab
     private String requestParams;
 
     /**
-     * 请求头
+     * 响应参数
      */
-    private String requestHeader;
+    private String responseParams;
 
     /**
-     * 响应头
+     * 请求内容类型
      */
-    private String responseHeader;
+    private String requestType;
 
     /**
-     * 接口状态（0-关闭，1-开启）
+     * 请求内容类型
+     */
+    private String responseType;
+
+    /**
+     * 操作
+     */
+    private String action;
+
+    /**
+     * 接口状态（0-关闭，1-开启，2-审核中）
      */
     private Integer status;
+
+    /**
+     * 请求参数封装类
+     */
+    private String requestClass;
+
+    /**
+     * 响应参数封装类
+     */
+    private String responseClass;
 
     /**
      * 请求类型
      */
     private String method;
 
-    /**
-     * 创建人
-     */
-    private Long userId;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除(0-未删, 1-已删)
-     */
-    @TableLogic
-    private Integer isDelete;
-
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 每次调用扣除积分
+     */
+    private String costs;
 }

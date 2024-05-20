@@ -9,7 +9,7 @@ import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.result.BaseResponse;
 import com.polaris.common.result.ResultUtils;
 import com.polaris.project.model.dto.user.*;
-import com.polaris.project.service.AliyunOssService;
+import com.polaris.project.manager.AliyunOssService;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;

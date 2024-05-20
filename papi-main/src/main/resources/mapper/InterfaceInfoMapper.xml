@@ -25,6 +25,7 @@
         <result property="responseParams" column="ResponseParams" jdbcType="VARCHAR"/>
         <result property="requestClass" column="requestClass" jdbcType="VARCHAR"/>
         <result property="responseClass" column="responseClass" jdbcType="VARCHAR"/>
+        <result property="costs" column="costs" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -34,6 +35,6 @@
         userId,createTime,updateTime,
         isDelete,path,action,
         interfaceAvatar,interfaceType,ResponseParams,
-        requestClass,responseClass
+        requestClass,responseClass,costs
     </sql>
 </mapper>

@@ -18,6 +18,9 @@
     <modules>
 
         <module>papi-main</module>
+        <module>papi-gateway</module>
+        <module>papi-interface</module>
+
     </modules>
     <properties>
         <spring-cloud.version>2021.0.7</spring-cloud.version>

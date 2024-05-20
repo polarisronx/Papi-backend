@@ -59,6 +59,12 @@ public class User implements Serializable {
     private String userGroup;
 
     /**
+     * papi平台通用积分
+     */
+    @TableField(value = "points")
+    private Integer points;
+
+    /**
      * 用户头像
      */
     private String userAvatar;
