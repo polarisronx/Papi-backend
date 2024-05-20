@@ -1,4 +1,4 @@
-package com.polaris.project.service;
+package com.polaris.project.manager;
 
 /**
  * @author polaris

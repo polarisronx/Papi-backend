@@ -1,4 +1,4 @@
-package com.polaris.project.service.impl;
+package com.polaris.project.manager.impl;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.RandomUtil;
@@ -9,7 +9,7 @@ import com.aliyun.oss.model.PutObjectResult;
 import com.polaris.project.config.AliyunOssConfig;
 import com.polaris.project.model.dto.user.UploadResult;
 
-import com.polaris.project.service.AliyunOssService;
+import com.polaris.project.manager.AliyunOssService;
 import com.polaris.project.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +31,7 @@ import java.io.InputStream;
  */
 @Component
 @Slf4j
-public class AliyunOssServiceImpl implements AliyunOssService {
+public class AliyunOssManager implements AliyunOssService {
     private static final String[] IMAGE_TYPES = new String[]{".bmp", ".jpg", ".jpeg", ".gif", ".png"};
 
     @Resource

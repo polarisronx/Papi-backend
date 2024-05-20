@@ -1,4 +1,4 @@
-package com.polaris.project.service;
+package com.polaris.project.manager;
 
 import com.polaris.project.model.dto.user.UploadResult;
 import org.springframework.web.multipart.MultipartFile;

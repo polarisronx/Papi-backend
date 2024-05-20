@@ -1,27 +1,12 @@
 package com.polaris.project.controller;
 
-
-
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.extra.mail.Mail;
-import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.result.BaseResponse;
 import com.polaris.common.result.ResultUtils;
-import com.polaris.project.model.dto.user.MailCodeRequest;
-import com.polaris.project.service.MailService;
+import com.polaris.project.manager.MailService;
 import lombok.extern.slf4j.Slf4j;
-import org.omg.CORBA.UserException;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-
-import java.util.concurrent.TimeUnit;
-
 import static com.polaris.common.exception.ThrowUtils.throwIf;
 
 /**

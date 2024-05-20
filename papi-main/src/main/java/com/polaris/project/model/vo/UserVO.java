@@ -75,6 +75,11 @@ public class UserVO implements Serializable {
     private String userMail;
 
     /**
+     * 积分
+     */
+    private String points;
+
+    /**
      * 创建时间
      */
     private Date createTime;

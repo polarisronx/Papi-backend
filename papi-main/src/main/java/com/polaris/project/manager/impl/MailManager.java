@@ -1,9 +1,7 @@
-package com.polaris.project.service.impl;
+package com.polaris.project.manager.impl;
 
 import cn.hutool.core.util.RandomUtil;
-import com.polaris.common.exception.BusinessException;
-import com.polaris.common.exception.ErrorCode;
-import com.polaris.project.service.MailService;
+import com.polaris.project.manager.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.MailSendException;
@@ -27,7 +25,7 @@ import static com.polaris.project.constant.MailConstant.*;
  */
 @Slf4j
 @Service
-public class MailServiceImpl implements MailService {
+public class MailManager implements MailService {
 
 
     @Resource
