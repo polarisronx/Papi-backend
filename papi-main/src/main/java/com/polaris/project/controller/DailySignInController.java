@@ -57,22 +57,18 @@ public class DailySignInController {
         UserVO loginUser = userService.getLoginUser();
         String redissonLock = (DAILY_SIGN_IN_LOCK_PREFIX + loginUser.getId()).intern();
         return redisLockManager.redissonDistributedLocks(redissonLock, () -> {
-
-            // 1.获取日期
-            LocalDateTime now = LocalDateTime.now();
-            // 2.拼接key
-            String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
-            String key = (DAILY_SIGN_IN_KEY_PREFIX + loginUser.getId() + keySuffix).intern();
-            // 3.获取今天是本月的第几天
-            int dayOfMonth = now.getDayOfMonth();
-            // 4 查询是否已经签到
+            // 1 获取key
+            String key = getKey(loginUser).intern();
+            // 2.获取今天是本月的第几天
+            int dayOfMonth = getDayOfMonth();
+            // 3 查询是否已经签到
             Boolean bit = stringRedisTemplate.opsForValue().getBit(key, dayOfMonth - 1);
             if(ObjectUtils.isNotEmpty(bit) && bit){
                 throw new BusinessException(ErrorCode.OPERATION_ERROR, "今日已签到，请明日再来~");
             }
-            // 5.签到，将对应的天数位置设置为 true
+            // 4.签到，将对应的天数位置设置为 true
             stringRedisTemplate.opsForValue().setBit(key, dayOfMonth - 1, true);
-            // 6.增加积分
+            // 5.增加积分
             boolean res = userService.updatePoint(SIGN_IN_REWARD);
             if (!res) {
                 throw new BusinessException(ErrorCode.OPERATION_ERROR);
@@ -91,19 +87,16 @@ public class DailySignInController {
     @Operation(summary = "检查是否签到")
     public BaseResponse<Integer> checkSignIn() {
         UserVO loginUser = userService.getLoginUser();
-        // 1.获取日期
-        LocalDateTime now = LocalDateTime.now();
-        // 2.拼接key
-        String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
-        String key = (DAILY_SIGN_IN_KEY_PREFIX + loginUser.getId() + keySuffix).intern();
-        // 3.获取今天是本月的第几天
-        int dayOfMonth = now.getDayOfMonth();
-        // 4 查询是否已经签到
+        // 1 获取key
+        String key = getKey(loginUser).intern();
+        // 2.获取今天是本月的第几天
+        int dayOfMonth = getDayOfMonth();
+        // 3 查询是否已经签到
         Boolean bit = stringRedisTemplate.opsForValue().getBit(key, dayOfMonth - 1);
-        if(ObjectUtils.isEmpty(bit) || bit){
+        if(bit==null||!bit){
             return  ResultUtils.success(-1);// 今天还没签到
         }
-        // 今天已经签到，统计本月签到次数
+        // 4 今天已经签到，统计本月签到次数
         List<Long> result = stringRedisTemplate.opsForValue().bitField(
                 key,
                 BitFieldSubCommands.create()
@@ -117,7 +110,7 @@ public class DailySignInController {
         if (num == null || num == 0) {
             return ResultUtils.success(0);
         }
-        // 6.循环遍历
+        // 循环遍历
         int count = 0;
         // 如果为0，说明未签到，结束
         // 如果不为0，说明已签到，计数器+1
@@ -128,6 +121,17 @@ public class DailySignInController {
             num >>>= 1;
         }
         return ResultUtils.success(count);
+    }
+    private String getKey(UserVO user) {
+        // 1.获取日期
+        LocalDateTime now = LocalDateTime.now();
+        // 2.拼接key
+        String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
+        return DAILY_SIGN_IN_KEY_PREFIX + user.getId() + keySuffix;
+    }
+    private int getDayOfMonth(){
+        LocalDateTime now = LocalDateTime.now();
+        return now.getDayOfMonth();
     }
 
 }

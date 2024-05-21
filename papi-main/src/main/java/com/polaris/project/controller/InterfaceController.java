@@ -192,6 +192,7 @@ public class InterfaceController {
         long size = interfaceInfoQueryRequest.getPageSize();
         String sortField = interfaceInfoQueryRequest.getSortField();
         String sortOrder = interfaceInfoQueryRequest.getSortOrder();
+        Long userID = interfaceInfoQueryRequest.getUserID();
         Integer status = interfaceInfoQuery.getStatus();
         String interfaceName = interfaceInfoQuery.getName();
         // description 需支持模糊搜索
@@ -203,6 +204,7 @@ public class InterfaceController {
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
         if (status!=null) queryWrapper.eq("status", status);
         queryWrapper.like(StringUtils.isNotBlank(interfaceName), "name", interfaceName);
+        queryWrapper.eq( userID!=null,"userId", userID);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
         Page<InterfaceInfo> interfaceInfoPage = interfaceInfoService.page(new Page<>(current, size), queryWrapper);
@@ -221,6 +223,7 @@ public class InterfaceController {
         if (interfaceInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+        UserVO loginUser = userService.getLoginUser();
         InterfaceInfo interfaceInfoQuery = new InterfaceInfo();
         BeanUtils.copyProperties(interfaceInfoQueryRequest, interfaceInfoQuery);
         long current = interfaceInfoQueryRequest.getCurrent();
@@ -229,13 +232,12 @@ public class InterfaceController {
         String sortOrder = interfaceInfoQueryRequest.getSortOrder();
         Long ownerId = interfaceInfoQuery.getUserId();
         String interfaceName = interfaceInfoQuery.getName();
-
         // 限制爬虫
         if (size > 50) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
-
+        queryWrapper.eq( loginUser.getId()!=null,"userId", loginUser.getId());
         queryWrapper.eq(StringUtils.isNotBlank(interfaceName), "userId", ownerId);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
