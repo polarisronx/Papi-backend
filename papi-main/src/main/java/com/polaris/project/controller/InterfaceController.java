@@ -18,6 +18,7 @@ import com.polaris.papiclientsdk.common.model.CommonResponse;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
 import com.polaris.project.model.vo.UserVO;
+import com.polaris.project.utils.CacheClient;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.dto.interfaceInfo.*;
 import com.polaris.project.annotation.AuthCheck;
@@ -26,6 +27,7 @@ import com.polaris.project.constant.UserConstant;
 import com.polaris.project.model.enums.InterfaceStatusrEnum;
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserService;
+import io.lettuce.core.RedisClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +39,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.polaris.common.exception.ThrowUtils.throwIf;
+import static com.polaris.project.constant.RedisConstant.*;
 
 /**
  * 接口管理
@@ -53,6 +59,9 @@ public class InterfaceController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CacheClient cacheClient;
 
     // region 增删改查
 
@@ -149,10 +158,10 @@ public class InterfaceController {
      */
     @GetMapping("/get")
     public BaseResponse<InterfaceInfo> getInterfaceInfoById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
+        // 查询缓存(考虑缓存穿透）
+        InterfaceInfo interfaceInfo = cacheClient.queryWithPassThrough(CACHE_INTERFACE_INFO, id, InterfaceInfo.class, interfaceInfoService::getById, CACHE_INTERFACE_INFO_TTL, TimeUnit.MINUTES);
+        throwIf(interfaceInfo == null, ErrorCode.OPERATION_ERROR, "接口不存在");
         return ResultUtils.success(interfaceInfo);
     }
 

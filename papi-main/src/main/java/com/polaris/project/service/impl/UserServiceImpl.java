@@ -3,16 +3,19 @@ package com.polaris.project.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.polaris.common.entity.User;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
+import com.polaris.common.result.ResultUtils;
 import com.polaris.project.mapper.UserMapper;
 import com.polaris.project.model.dto.user.*;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.TokenService;
 import com.polaris.project.service.UserService;
+import com.polaris.project.utils.CacheClient;
 import com.polaris.project.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,8 +26,12 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.polaris.common.exception.ThrowUtils.throwIf;
+
 import static com.polaris.project.constant.MailConstant.MAIL_CODE_PREFIX;
+import static com.polaris.project.constant.RedisConstant.*;
 import static com.polaris.project.constant.UserConstant.ADMIN_ROLE;
 import static com.polaris.project.constant.UserConstant.USER_LOGIN_STATE;
 
@@ -196,17 +203,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return token;
     }
 
-
+    @Resource
+    private CacheClient cacheClient;
     /**
      * 获取当前登录用户
      *
-     * @return
      */
     @Override
     public UserVO getLoginUser() {
         UserDTO user = UserHolder.getUser();
         throwIf(user == null, ErrorCode.NOT_LOGIN_ERROR);
-        User userEntity = getById(user.getId());// 从数据库查询（追求性能的话可以注释，直接走缓存）
+        // 查询缓存(考虑缓存穿透）
+        User userEntity = cacheClient.queryWithPassThrough(CACHE_LOGIN_USER, user.getId(), User.class, this::getById, CACHE_LOGIN_USER_TTL, TimeUnit.MINUTES);
+        throwIf(userEntity == null, ErrorCode.OPERATION_ERROR, "用户不存在");
         return BeanUtil.copyProperties(userEntity, UserVO.class);
     }
 
@@ -221,7 +230,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 //        User user = (User) userObj;
         UserDTO user = UserHolder.getUser();
         throwIf(user == null, ErrorCode.NOT_LOGIN_ERROR);
-        return user != null && ADMIN_ROLE.equals(user.getUserRole());
+        return ADMIN_ROLE.equals(user.getUserRole());
     }
 
     /**
@@ -247,6 +256,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         userEntity.setId(user.getId());
         boolean b = updateById(userEntity);
         throwIf(!b, ErrorCode.SYSTEM_ERROR, "更新用户信息失败!");
+        // 删除缓存
+        stringRedisTemplate.delete(CACHE_LOGIN_USER+user.getId());
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(userEntity, userVO);
         UserHolder.saveUser(BeanUtil.copyProperties(userVO, UserDTO.class));
