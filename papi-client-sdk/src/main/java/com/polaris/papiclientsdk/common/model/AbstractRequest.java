@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author polaris
- * @Create 2024-04-02 11:07
- * @Version 1.0
+ * @author polaris
+ * @data 2024-04-02 11:07
+ * @version 1.0
  * ClassName AbstactModel
  * Package com.polaris.papiclientsdk.utils.utils
  * Description
@@ -94,7 +94,7 @@ public abstract class AbstractRequest<T extends CommonResponse> {
     protected <V> void setParamSimple(HashMap<String, String> map, String key, V value) {
         if (value != null) {
 
-            key = key.substring(0, 1).toUpperCase() + key.substring(1);
+//            key = key.substring(0, 1).toUpperCase() + key.substring(1);
             key = key.replace("_", ".");
             map.put(key, String.valueOf(value));
         }

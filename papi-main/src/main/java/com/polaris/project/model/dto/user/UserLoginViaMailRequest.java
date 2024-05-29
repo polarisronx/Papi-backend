@@ -10,7 +10,7 @@ import java.io.Serializable;
  * ClassName UserLoginViaMailRequest
  * Package com.polaris.project.model.dto.user
  * Description
- * @create 2024-04-19 19:44
+ * @date 2024-04-19 19:44
  */
 @Data
 public class UserLoginViaMailRequest implements Serializable {

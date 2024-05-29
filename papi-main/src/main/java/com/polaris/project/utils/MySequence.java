@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * ClassName MySequence
  * Package com.polaris.project.utils
  * Description 时间戳39位，工作机器4位，序列号10位，系统最大可用时限：2041-06-02 21:56:53，每毫秒可产生1024个序列号
- * @create 2024-05-04 16:26
+ * @date 2024-05-04 16:26
  */
 @Service
 public class MySequence implements IdentifierGenerator {

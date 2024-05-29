@@ -15,7 +15,7 @@ import static com.polaris.common.exception.ThrowUtils.throwIf;
  * ClassName MailController
  * Package com.polaris.project.controller
  * Description
- * @create 2024-04-19 16:54
+ * @date 2024-04-19 16:54
  */
 @RestController
 @RequestMapping("/mail")
@@ -28,7 +28,7 @@ public class MailController {
     /**
      * @Description 发送邮箱验证码
      * @author polaris
-     * @create 2024/4/19
+     * @date 2024/4/19
      */
     @GetMapping("/sendCode")
     public BaseResponse<Boolean> sendUserMail(String mailAccount){

@@ -2,6 +2,7 @@ package com.polaris.project.manager.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.polaris.project.manager.MailService;
+import jdk.internal.org.objectweb.asm.signature.SignatureWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.MailSendException;
@@ -21,7 +22,7 @@ import static com.polaris.project.constant.MailConstant.*;
  * ClassName MailServiceImpl
  * Package com.polaris.project.service.impl
  * Description
- * @create 2024-04-19 19:32
+ * @date 2024-04-19 19:32
  */
 @Slf4j
 @Service
@@ -41,7 +42,9 @@ public class MailManager implements MailService {
             // 判断当前待发送邮箱是否已经有验证码 不必
 //            String code = stringRedisTemplate.opsForValue().get(key);
 //            throwIf(code!=null, new BusinessException(ErrorCode.NO_SUPPORT_ERROR,"邮箱验证码已发送，请勿重复操作"));
+            switch (sendTo){
 
+            }
             MimeMessageHelper messageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
             //邮件发信人
             messageHelper.setFrom(MAIL_FROM);

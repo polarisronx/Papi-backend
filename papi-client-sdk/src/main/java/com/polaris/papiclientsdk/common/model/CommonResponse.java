@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author polaris
- * @Create 2024-04-02 12:06
- * @Version 1.0
+ * @author polaris
+ * @data 2024-04-02 12:06
+ * @version 1.0
  * ClassName AbstractResponse
  * Package com.polaris.papiclientsdk.utils
  * Description

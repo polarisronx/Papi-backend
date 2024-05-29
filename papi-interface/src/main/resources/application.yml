@@ -1,3 +1,5 @@
 spring:
   application:
     name: papi-interface
+  profiles:
+    active: dev

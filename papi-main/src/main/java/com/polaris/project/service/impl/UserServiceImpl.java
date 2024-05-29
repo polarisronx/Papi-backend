@@ -121,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * 利用了spring的共享Session，把Session存在Redis
      * 用户每次登录，都会把用户信息作为Session的Attribute放进去，因为spring的集成，每次可以轻松地从请求中拿到Session，再从Session中获取用户信息。
      * @author polaris
-     * @create 2024/4/12
+     * @date 2024/4/12
      * @return {@link User}
      */
     @Override
@@ -150,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * @Description 通过JWT实现单点登录
      * @author polaris
-     * @create 2024/4/14
+     * @date 2024/4/14
      * @return {@link String}
      */
     @Override

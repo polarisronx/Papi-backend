@@ -19,9 +19,9 @@ import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
 /**
- * @Author: polaris
+ * @author: polaris
  * @Date: 2024年4月9日16:32:26
- * @Version: 1.0
+ * @version: 1.0
  * @Description: 错误web异常处理程序
  */
 @Configuration

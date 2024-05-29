@@ -2,7 +2,9 @@ package com.polaris.papiclientsdk.basicapi.client;
 
 import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost1Request;
 import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost2Request;
+import com.polaris.papiclientsdk.basicapi.model.request.IntToRomanRequest;
 import com.polaris.papiclientsdk.basicapi.model.response.GetNameByPostResponse;
+import com.polaris.papiclientsdk.basicapi.model.response.IntToRomanResponse;
 import com.polaris.papiclientsdk.common.execption.PapiClientSDKException;
 import com.polaris.papiclientsdk.common.model.AbstractClient;
 import com.polaris.papiclientsdk.common.model.AbstractRequest;
@@ -15,9 +17,9 @@ import java.util.HashMap;
 
 
 /**
- * @Author polaris
- * @Create 2024-03-08 15:24
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-08 15:24
+ * @version 1.0
  * ClassName ApiClient
  * Package com.polaris.apiinterface.client
  * Description
@@ -68,6 +70,10 @@ public class PapiClient extends AbstractClient {
         getNameByPost2Request.setCustomField(commonRequest.getCustomizedParams());
         return call(getNameByPost2Request, "getNameByPost2");
     }
-
+    public IntToRomanResponse intToRoman(CommonRequest commonRequest) throws PapiClientSDKException{
+        IntToRomanRequest intToRomanRequest = new IntToRomanRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        intToRomanRequest.setCustomField(commonRequest.getCustomizedParams());
+        return call(intToRomanRequest,"intToRoman");
+    }
 }
 

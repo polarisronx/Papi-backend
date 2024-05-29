@@ -1,0 +1,21 @@
+
+
+[
+  {
+    "type": "int",
+    "fieldName": "code",
+    "desc": "全局响应状态码"
+  },
+  {
+    "type": "int",
+    "fieldName": "data.code",
+    "desc": "内部响应状态码"
+  },
+  {
+    "type": "String",
+    "fieldName": "data.roman",
+    "required": "true",
+    "desc": "罗马数"
+  }
+]
+

@@ -35,7 +35,7 @@ import static com.polaris.project.constant.TokenConstant.*;
  * ClassName TokenServiceImpl
  * Package com.polaris.project.service.impl
  * Description
- * @create 2024-04-12 21:15
+ * @date 2024-04-12 21:15
  */
 @Slf4j
 @Service
@@ -52,7 +52,7 @@ public class TokenServiceImpl implements TokenService {
      * 包含自定义载荷：用户账号、用户角色、用户头像、用户昵称
      * 过期时间 1天
      * @author polaris
-     * @create 2024/4/14
+     * @date 2024/4/14
      * @return {@link String}
      */
 
@@ -104,7 +104,7 @@ public class TokenServiceImpl implements TokenService {
      * 包含自定义载荷 用户id
      * 过期时间 4倍 access_token
      * @author polaris
-     * @create 2024/4/14
+     * @date 2024/4/14
      * @return {@link String}
      */
 
@@ -149,7 +149,7 @@ public class TokenServiceImpl implements TokenService {
     /**
      * @Description 验证token是否有效，有效返回用户信息，无效返回null
      * @author polaris
-     * @create 2024/4/14
+     * @date 2024/4/14
      * @return {@link User}
      */
     @Override
@@ -198,7 +198,7 @@ public class TokenServiceImpl implements TokenService {
      * @Description 移除用户token
      * 用户注销、修改密码等情况需要移除token
      * @author polaris
-     * @create 2024/4/14
+     * @date 2024/4/14
      */
     @Override
     public void removeToken (long userId){
@@ -235,7 +235,7 @@ public class TokenServiceImpl implements TokenService {
      * createKeyPair 用来生成唯一的keyId 通过uuid 创建公钥和私钥。这个方法只要在本地运行就好了不用在线上执行。
      * 只要keyId、公钥和私钥没有被泄漏可以一直用，不用再次执行这个方法。
      * @author polaris
-     * @create 2024/4/13
+     * @date 2024/4/13
      */
     public static void createKeyPair(){
         String keyId = UUID.randomUUID().toString().replace("-", "");

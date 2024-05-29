@@ -9,9 +9,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 import javax.annotation.Resource;
 
 /**
- * @Author polaris
- * @Create 2024-03-27 21:06
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-27 21:06
+ * @version 1.0
  * ClassName InnerUserInterfaceInfoServiceImpl
  * Package com.polaris.utils.service.impl
  * Description
@@ -24,7 +24,7 @@ public class InnerUserInterfaceInfoServiceImpl implements InnerUserInterfaceInfo
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/27
+     * @date 2024/3/27
      **/
     @Resource
     private UserInterfaceInfoService userInterfaceInfoService;

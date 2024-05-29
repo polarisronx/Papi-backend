@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 /**
  * @author polaris
- * @create 2024-4-14
+ * @date 2024-4-14
  * @version 1.0
  * ClassName mvcConfig
  * Package

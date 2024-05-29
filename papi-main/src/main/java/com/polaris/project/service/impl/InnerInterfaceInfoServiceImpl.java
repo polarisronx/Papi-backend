@@ -12,9 +12,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 import javax.annotation.Resource;
 
 /**
- * @Author polaris
- * @Create 2024-03-27 21:06
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-27 21:06
+ * @version 1.0
  * ClassName InnerInterfaceInfoServiceImpl
  * Package com.polaris.utils.service.impl
  * Description
@@ -30,7 +30,7 @@ public class InnerInterfaceInfoServiceImpl implements InnerInterfaceInfoService 
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/27
+     * @date 2024/3/27
      **/
     @Override
     public InterfaceInfo getInterfaceInfo (String action, String method){

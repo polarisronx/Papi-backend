@@ -10,9 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author polaris
- * @Create 2024-03-14 21:20
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-14 21:20
+ * @version 1.0
  * ClassName PapiClientConfig
  * Package com.polaris.papiclientsdk
  * Description

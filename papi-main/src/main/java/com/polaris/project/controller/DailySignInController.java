@@ -35,7 +35,7 @@ import static com.polaris.project.constant.RedisConstant.DAILY_SIGN_IN_LOCK_PREF
  * ClassName DailySignIn
  * Package com.polaris.project.controller
  * Description 每日签到
- * @create 2024-05-19 22:38
+ * @date 2024-05-19 22:38
  */
 @RestController
 @RequestMapping("/dailySignIn")
@@ -79,7 +79,7 @@ public class DailySignInController {
     /**
      * @Description 检查是否签到，若已签到返回本月签到的天数
      * @author polaris
-     * @create 2024/5/20
+     * @date 2024/5/20
      * @return {@link BaseResponse< Integer>}
      */
 

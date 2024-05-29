@@ -29,7 +29,7 @@ import static com.polaris.project.constant.RedisConstant.CACHE_NULL_TTL;
  *  方法3：根据指定的key查询缓存，并反序列化为指定类型，利用缓存空值的方式解决缓存穿透问题
  *  方法4：根据指定的key查询缓存，并反序列化为指定类型，需要利用逻辑过期解决缓存击穿问题
  * @author polaris
- * @create 2024/5/22
+ * @date 2024/5/22
 
  */
 

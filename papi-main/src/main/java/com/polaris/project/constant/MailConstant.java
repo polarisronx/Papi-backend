@@ -6,7 +6,7 @@ package com.polaris.project.constant;
  * ClassName MailConstant
  * Package com.polaris.project.constant
  * Description
- * @create 2024-04-19 20:17
+ * @date 2024-04-19 20:17
  */
 public interface MailConstant {
     public static final String MAIL_CODE_PREFIX = "mail:code:";

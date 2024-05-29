@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
  * ClassName AliyunOssService
  * Package com.polaris.project.service
  * Description
- * @create 2024-04-24 14:03
+ * @date 2024-04-24 14:03
  */
 public interface AliyunOssService {
     UploadResult uploadImage(MultipartFile uploadFile);

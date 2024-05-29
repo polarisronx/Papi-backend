@@ -21,4 +21,6 @@ public interface CommonConstant {
      * 签到奖励积分
      */
     Integer SIGN_IN_REWARD = 5;
+
+
 }

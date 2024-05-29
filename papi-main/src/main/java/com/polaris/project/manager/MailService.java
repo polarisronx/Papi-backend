@@ -6,7 +6,7 @@ package com.polaris.project.manager;
  * ClassName MailService
  * Package com.polaris.project.service
  * Description
- * @create 2024-04-19 16:49
+ * @date 2024-04-19 16:49
  */
 public interface MailService {
 

@@ -44,7 +44,7 @@ import java.util.*;
 
 /**
  * @author polaris
- * @create 2024-03-26 19:13
+ * @date 2024-03-26 19:13
  * @version 1.0
  * ClassName CustomGlobalFilter
  * Package com.polaris.papigateway
@@ -169,8 +169,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         Long interfaceInfoId = interfaceInfo.getId();
         Long userId = invokeUser.getId();
         // 05 判断是否还有调用次数
-        if(innerUserInterfaceInfoService.leftCount(interfaceInfoId,userId)<=0){
-            throw new BusinessException(ErrorCode.NO_ACCESS_ERROR,"调用次数不足");
+        if(invokeUser.getPoints()<interfaceInfo.getCosts()){
+            throw new BusinessException(ErrorCode.NO_ACCESS_ERROR,"用户积分不足");
         }
         // 06 请求转发，调用接口
         return handleResponse(exchange, chain, interfaceInfoId, userId);
@@ -181,7 +181,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/26
+     * @date 2024/3/26
      **/
     public Mono<Void> handleResponse(ServerWebExchange exchange, GatewayFilterChain chain,Long interfaceInfoId,Long userId){
         try {
@@ -250,7 +250,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/26
+     * @date 2024/3/26
      **/
     public Mono<Void> handleReject(ServerHttpResponse response){
         response.setStatusCode(HttpStatus.FORBIDDEN);
@@ -263,7 +263,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/26
+     * @date 2024/3/26
      **/
     public Mono<Void> handleError(ServerHttpResponse response){
         response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);

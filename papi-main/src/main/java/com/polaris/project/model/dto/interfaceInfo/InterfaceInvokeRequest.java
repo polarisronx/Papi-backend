@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author polaris
- * @Create 2024-03-18 20:00
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-18 20:00
+ * @version 1.0
  * ClassName InterfaceInvokeRequest
  * Package com.polaris.project.model.dto.interfaceInfo
  * Description 接口调用测试

@@ -11,6 +11,11 @@ spring:
     host: 172.28.16.169
     database: 0
     password: 907830201
+  rabbitmq:
+    host: 172.28.16.169
+    port: 5672
+    password: 123456
+    username: admin
 dubbo:
   application:
     name: papi-main

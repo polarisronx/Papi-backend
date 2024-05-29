@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.function.Consumer;
 
 /**
- * @Author polaris
- * @Create 2024-03-22 20:47
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-22 20:47
+ * @version 1.0
  * ClassName UserInterfaceInfoServiceTest
  * Package com.polaris.project.service
  * Description

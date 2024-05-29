@@ -16,7 +16,7 @@ public interface InnerUserService {
      * @param null
      * @return
      * @author polaris
-     * @create 2024/3/27
+     * @date 2024/3/27
      **/
     User getInvokeUser(String accessKey);
 }

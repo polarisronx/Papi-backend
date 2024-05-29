@@ -8,7 +8,7 @@ import lombok.Data;
  * ClassName UserDTO
  * Package com.polaris.project.model.dto.user
  * Description 与用户登录-token相关
- * @create 2024-04-14 20:50
+ * @date 2024-04-14 20:50
  */
 @Data
 public class UserDTO {

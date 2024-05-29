@@ -15,7 +15,6 @@ import com.polaris.papiclientsdk.common.utils.SignUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +27,7 @@ import static com.polaris.papiclientsdk.common.utils.SignUtils.*;
 
 /**
  * @author polaris
- * @create 2024-04-02 11:07
+ * @date 2024-04-02 11:07
  * @version 2.0
  * ClassName AbstractClient
  * Package com.polaris.papiclientsdk.utils.utils
@@ -63,7 +62,7 @@ public abstract class AbstractClient {
         Map<String, Object> customizedParams = request.getCustomizedParams();
 
         if (!customizedParams.isEmpty() || signMethod.equals(SIGN_SHA1)) {
-            okRsp = doRequestV3(request, actionName);
+            okRsp = doRequest(request, actionName);
         }
         else {
             throw new PapiClientSDKException(
@@ -78,7 +77,7 @@ public abstract class AbstractClient {
     }
 
 
-    private <T extends CommonResponse> T doRequestV3(AbstractRequest<T> request, String actionName)
+    private <T extends CommonResponse> T doRequest (AbstractRequest<T> request, String actionName)
             throws PapiClientSDKException{
         String endpoint = httpProfile.getEndpoint();
         String requestMethod = request.getMethod();
@@ -183,7 +182,7 @@ public abstract class AbstractClient {
      *      用于说明此次请求有哪些消息头参与了签名，与CanonicalHeaders中包含的消息头是一一对应的
      *   HashedRequestPayload          // ·6 摘要编码后请求正文
      * @author polaris
-     * @create 2024/4/8
+     * @date 2024/4/8
      * @return {@link String}
      */
     private static <T extends CommonResponse>  Map<String,String> getCanonicalRequest (AbstractRequest<T> request,Map<String, String> canonicalHeaderMap) throws PapiClientSDKException{
@@ -283,7 +282,7 @@ public abstract class AbstractClient {
      * @Description
      * 获取消息头
      * @author polaris
-     * @create 2024/4/8
+     * @date 2024/4/8
      * @return {@link HashMap<String,String>}
      */
     private <T extends CommonResponse> HashMap<String, String> getHeader (AbstractRequest<T> request, String actionName, String contentType, String authorization, String timestamp, String hashedRequestPayload){
@@ -314,7 +313,7 @@ public abstract class AbstractClient {
     /**
      * @Description 获取规范的请求头
      * @author polaris
-     * @create 2024/4/8
+     * @date 2024/4/8
      * @return {@link Map< String, String>}
      */
     public static Map<String,String> getCanonicalHeader(String method,String timestamp,String contentType,String endpoint){
@@ -337,7 +336,7 @@ public abstract class AbstractClient {
     /**
      * @Description 尝试将响应体解析为map
      * @author polaris
-     * @create 2024/4/8
+     * @date 2024/4/8
      * @return {@link Map< String, Object>}
      */
     private Map<String, Object> parseJson(Map<String, Object> data,String body){
@@ -355,7 +354,7 @@ public abstract class AbstractClient {
     /**
      * @Description 获取规范查询参数
      * @author polaris
-     * @create 2024/4/8
+     * @date 2024/4/8
      * @return {@link String}
      */
     private static String getCanonicalQueryString (HashMap<String, String> params, String method)

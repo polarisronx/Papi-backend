@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * ClassName PapiMain
  * Package com.polaris.project
  * Description
- * @create 2024-04-10 11:12
+ * @date 2024-04-10 11:12
  */
 @SpringBootApplication
 @MapperScan("com.polaris.project.mapper")

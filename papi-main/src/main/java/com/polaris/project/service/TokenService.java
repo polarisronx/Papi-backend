@@ -11,7 +11,7 @@ import org.jose4j.lang.JoseException;
  * ClassName TokenService
  * Package com.polaris.project.service
  * Description 利用Redis实现双token登录
- * @create 2024-04-12 21:11
+ * @date 2024-04-12 21:11
  */
 
 public interface TokenService {

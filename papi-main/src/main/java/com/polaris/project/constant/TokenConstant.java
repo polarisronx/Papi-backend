@@ -9,7 +9,7 @@ import com.polaris.project.service.impl.TokenServiceImpl;
  * ClassName TokenConstant
  * Package com.polaris.project.constant
  * Description
- * @create 2024-04-13 23:26
+ * @date 2024-04-13 23:26
  */
 public interface TokenConstant {
     /**

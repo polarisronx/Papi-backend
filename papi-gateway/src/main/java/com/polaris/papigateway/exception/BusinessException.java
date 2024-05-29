@@ -5,7 +5,7 @@ import com.polaris.common.exception.ErrorCode;
 
 /**
  * @author polaris
- * @create 2024-03-26 19:13
+ * @date 2024-03-26 19:13
  * @version 1.0
  * Description 自定义异常类
  */

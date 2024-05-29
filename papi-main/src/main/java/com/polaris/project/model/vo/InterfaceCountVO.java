@@ -1,9 +1,9 @@
 package com.polaris.project.model.vo;
 
 /**
- * @Author polaris
- * @Create 2024-03-28 19:23
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-28 19:23
+ * @version 1.0
  * 接口信息封装视图
  * 继承了InterfaceInfo，同时带有 调用次数 属性。
  * @TableName interfaceInfo

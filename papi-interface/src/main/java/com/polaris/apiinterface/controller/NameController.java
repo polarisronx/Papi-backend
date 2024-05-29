@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author Administrator
- * @Create 2024-03-07 21:33
- * @Version 1.0
+ * @author Administrator
+ * @data 2024-03-07 21:33
+ * @version 1.0
  * ClassName NameController
  * Package com.polaris.apiinterface.controller
  * Description
@@ -39,4 +39,5 @@ public class NameController {
     public GetNameByPostResponse getNameByPost2(@RequestBody GetNameByPost2Request request){
         return JSONUtil.toBean(JSONUtil.toJsonStr(request), GetNameByPostResponse.class);
     }
+
 }

@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 import static com.polaris.project.constant.UserConstant.ADMIN_ROLE;
 
 /**
- * @Author polaris
- * @Create 2024-03-28 16:28
- * @Version 1.0
+ * @author polaris
+ * @data 2024-03-28 16:28
+ * @version 1.0
  * ClassName AnalysisController
  * Package com.polaris.project.controller
  * Description 用于接口调用情况的统计分析
@@ -46,7 +46,7 @@ public class AnalysisController {
     /*  Description
      *  用于统计分析接口调用情况的接口
      * @author polaris
-     * @create 2024/3/28
+     * @date 2024/3/28
      */
     @GetMapping("top/interface/invoke")
     @AuthCheck(mustRole = ADMIN_ROLE)

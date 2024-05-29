@@ -3,8 +3,9 @@ server:
   servlet:
     context-path: /api
 host:
-#  nacos: 127.0.0.1:8848 本地nacos
-  nacos: 106.15.79.18:8848
+  nacos: 127.0.0.1:8848
+  #本地nacos
+#  nacos: 106.15.79.18:8848
   # 部署版本必改1
 #  nacos: 172.28.16.169:8848
   # 服务器环境用内网ip
@@ -24,8 +25,9 @@ spring:
         password: nacos
       config:
         server-addr: ${host.nacos}
-#        namespace: b765d215-8484-45ec-a86f-07048c01dd47 本地nacos
-        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
+        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+        # 本地nacos
+#        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
         #服务器dev
 #        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
         # 部署版本必改2

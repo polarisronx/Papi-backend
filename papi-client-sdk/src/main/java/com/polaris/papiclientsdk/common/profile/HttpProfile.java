@@ -3,9 +3,9 @@ package com.polaris.papiclientsdk.common.profile;
 import lombok.Data;
 
 /**
- * @Author polaris
- * @Create 2024-04-02 11:36
- * @Version 1.0
+ * @author polaris
+ * @data 2024-04-02 11:36
+ * @version 1.0
  * ClassName HttpProfile
  * Package com.polaris.papiclientsdk.utils.profile
  * Description
