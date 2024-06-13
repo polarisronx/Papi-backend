@@ -1,5 +1,7 @@
 package com.polaris.project.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
@@ -8,24 +10,31 @@ import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.result.BaseResponse;
 import com.polaris.common.result.ResultUtils;
+import com.polaris.project.annotation.BlackListInterceptor;
 import com.polaris.project.model.dto.user.*;
 import com.polaris.project.manager.AliyunOssService;
+import com.polaris.project.utils.CacheClient;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.polaris.common.exception.ThrowUtils.throwIf;
+import static com.polaris.project.constant.RedisConstant.CACHE_LOGIN_USER;
+import static com.polaris.project.constant.RedisConstant.CACHE_LOGIN_USER_TTL;
 
 /**
  * 用户接口
@@ -38,7 +47,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
-
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     @Resource
     private AliyunOssService aliyunOssService;
     // region 登录相关
@@ -49,6 +59,7 @@ public class UserController {
      * @param userRegisterRequest
      * @return
      */
+    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 1L,business = "register", protectLimit = 10)
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
 
@@ -96,6 +107,7 @@ public class UserController {
      * @param userLoginRequest
      * @return
      */
+    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 10L,business = "login")
     @PostMapping("/loginViaPassword")
     public BaseResponse<String> userLogin(@RequestBody UserLoginRequest userLoginRequest) {
         // 校验参数
@@ -200,7 +212,6 @@ public class UserController {
 
     /**
      * 更新用户
-     * RequestPart 注解用于multipart/form-data类型的请求体 中的文件类型数据获取
      * @param userUpdateRequest
      * @param userUpdateRequest
      * @return
@@ -212,6 +223,14 @@ public class UserController {
         UserVO userVO = userService.updateUserInfo(userUpdateRequest);
         return ResultUtils.success(userVO,"更新成功");
     }
+    /**
+     * @Description 上传用户头像
+     *       RequestPart 注解用于multipart/form-data类型的请求体 中的文件类型数据获取
+     * @author polaris
+     * @create 2024/6/13
+     * @return {@link BaseResponse<UploadResult>}
+     */
+
     @PostMapping("/upload/avatar")
     @Operation(summary = "上传用户头像")
     public BaseResponse<UploadResult> uploadAvatar(@RequestPart(value = "file") MultipartFile multipartFile) {
@@ -232,14 +251,18 @@ public class UserController {
      * @return
      */
     @GetMapping("/get")
-    public BaseResponse<UserVO> getUserById(int id, HttpServletRequest request) {
+    public BaseResponse<UserVO> getUserById(long id, HttpServletRequest request) {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getById(id);
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        return ResultUtils.success(userVO);
+        // 查询缓存
+        String json = stringRedisTemplate.opsForValue().get(id);
+        if(StringUtils.isNotBlank(json)){
+            return ResultUtils.success(JSONUtil.toBean(json, UserVO.class));
+        }
+        User userEntity = userService.getUserById(id);
+
+        return ResultUtils.success(BeanUtil.copyProperties(userEntity, UserVO.class));
     }
 
     /**
@@ -292,6 +315,10 @@ public class UserController {
         }).collect(Collectors.toList());
         userVOPage.setRecords(userVOList);
         return ResultUtils.success(userVOPage);
+    }
+
+    public BaseResponse limitErr(){
+        return ResultUtils.error(ErrorCode.NO_ACCESS_ERROR, "账号被封禁");
     }
 
     // endregion
