@@ -1,4 +1,4 @@
-package com.polaris.apiinterface.controller;
+package com.polaris.apiinterface.controller.v1;
 
 import com.polaris.apiinterface.service.RomanNumeralsService;
 import com.polaris.papiclientsdk.basicapi.model.response.IntToRomanResponse;
@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * @create 2024-05-28 17:16
  */
 @RestController
-@RequestMapping("/roman")
+@RequestMapping("/v1/roman")
 public class RomanNumeralsController {
     @Resource
     RomanNumeralsService romanNumeralsService;

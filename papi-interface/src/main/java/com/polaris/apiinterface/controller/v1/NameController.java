@@ -1,4 +1,4 @@
-package com.polaris.apiinterface.controller;
+package com.polaris.apiinterface.controller.v1;
 
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import java.util.Map;
  * Description
  */
 @RestController
-@RequestMapping("/name")
+@RequestMapping("/v1/name")
 public class NameController {
     @GetMapping("/a")
     public String getNameByGet(@RequestParam String name){

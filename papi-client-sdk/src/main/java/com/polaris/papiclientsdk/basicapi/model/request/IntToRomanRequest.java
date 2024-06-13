@@ -36,7 +36,7 @@ public class IntToRomanRequest extends AbstractRequest<IntToRomanResponse> {
     public String getMethod (){
         return RequestMethodEnum.GET.getMethod();
     }
-
+    @Override
     public void setCustomField (Map<String,Object> params){
         for (Map.Entry<String, Object> entry : params.entrySet()){
             if (entry.getKey().equals("num")){
