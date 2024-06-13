@@ -22,4 +22,5 @@ public class AsyncInvokeProducer {
         rabbitTemplate.convertAndSend(PAPI_EXCHANGE_NAME, PAPI_ROUTING_KEY, message);
     }
 
+
 }
