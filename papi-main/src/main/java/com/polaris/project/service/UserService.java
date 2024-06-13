@@ -80,4 +80,6 @@ public interface UserService extends IService<User> {
      */
     boolean updatePoint (Integer addPoint);
 
+    User getUserById(Long userId);
+
 }

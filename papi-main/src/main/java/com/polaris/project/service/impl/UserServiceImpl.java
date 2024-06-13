@@ -19,6 +19,7 @@ import com.polaris.project.utils.CacheClient;
 import com.polaris.project.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -52,7 +53,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private TokenService tokenService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-
+    @Resource
+    private CacheClient cacheClient;
 
     /**
      * 盐值，混淆密码
@@ -203,8 +205,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return token;
     }
 
-    @Resource
-    private CacheClient cacheClient;
+
     /**
      * 获取当前登录用户
      *
@@ -214,7 +215,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         UserDTO user = UserHolder.getUser();
         throwIf(user == null, ErrorCode.NOT_LOGIN_ERROR);
         // 查询缓存(考虑缓存穿透）
-        User userEntity = cacheClient.queryWithPassThrough(CACHE_LOGIN_USER, user.getId(), User.class, this::getById, CACHE_LOGIN_USER_TTL, TimeUnit.MINUTES);
+        User userEntity = cacheClient.queryWithPassThrough(CACHE_LOGIN_USER, user.getId(), User.class, this::getUserById, CACHE_LOGIN_USER_TTL, TimeUnit.MINUTES);
         throwIf(userEntity == null, ErrorCode.OPERATION_ERROR, "用户不存在");
         return BeanUtil.copyProperties(userEntity, UserVO.class);
     }
@@ -267,10 +268,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public boolean updatePoint (Integer addPoint){
         Long userId = UserHolder.getUser().getId();
-        User user = getById(userId);
+        User user = getUserById(userId);
         user.setPoints(user.getPoints()+addPoint);
         boolean res = updateById(user);
+        // 删除缓存
+        stringRedisTemplate.delete(CACHE_LOGIN_USER+user.getId());
         return res;
+    }
+    @Cacheable(value = "user", key = "'userId:'+#userId")
+    @Override
+    public User getUserById (Long userId){
+        return getById(userId);
     }
 
 }
