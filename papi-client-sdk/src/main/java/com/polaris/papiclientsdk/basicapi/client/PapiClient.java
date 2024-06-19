@@ -3,16 +3,20 @@ package com.polaris.papiclientsdk.basicapi.client;
 import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost1Request;
 import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost2Request;
 import com.polaris.papiclientsdk.basicapi.model.request.IntToRomanRequest;
+import com.polaris.papiclientsdk.basicapi.model.request.LstmPredictRequest;
 import com.polaris.papiclientsdk.basicapi.model.response.GetNameByPostResponse;
 import com.polaris.papiclientsdk.basicapi.model.response.IntToRomanResponse;
+import com.polaris.papiclientsdk.basicapi.model.response.LstmPredictResponse;
 import com.polaris.papiclientsdk.common.execption.PapiClientSDKException;
 import com.polaris.papiclientsdk.common.model.AbstractClient;
 import com.polaris.papiclientsdk.common.model.AbstractRequest;
 import com.polaris.papiclientsdk.common.model.CommonRequest;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
+import com.polaris.papiclientsdk.common.utils.http.HttpConnection;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -35,12 +39,13 @@ public class PapiClient extends AbstractClient {
         requestReady.put("GetNameByPost2", new GetNameByPost2Request());
         requestReady.put("GetNameByPost1", new GetNameByPost1Request());
     }
-    public PapiClient (Credential credential, HttpProfile httpProfile){
+    public PapiClient (Credential credential, HttpProfile httpProfile, HttpConnection httpConnection){
         super();
         this.setCredential(credential);
         this.setHttpProfile(httpProfile);
         this.setSdkVersion(SDK_VERSION);
-        this.setGatewayHost(GATEWAY_HOST) ;
+        this.setGatewayHost(GATEWAY_HOST);
+        this.setHttpConnection(httpConnection);
     }
 
 
@@ -74,6 +79,20 @@ public class PapiClient extends AbstractClient {
         IntToRomanRequest intToRomanRequest = new IntToRomanRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
         intToRomanRequest.setCustomField(commonRequest.getCustomizedParams());
         return call(intToRomanRequest,"intToRoman");
+    }
+    public IntToRomanResponse intToRoman(IntToRomanRequest intToRomanRequest) throws PapiClientSDKException{
+        return call(intToRomanRequest,"intToRoman");
+    }
+    public LstmPredictResponse lstmPredict(CommonRequest commonRequest) throws PapiClientSDKException, IOException{
+        LstmPredictRequest lstmPredictRequest = new LstmPredictRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        lstmPredictRequest.setCustomField(commonRequest.getCustomizedParams());
+        lstmPredictRequest.setInfo(commonRequest.getInfo());
+        lstmPredictRequest.setFiles(commonRequest.files);
+        lstmPredictRequest.setFile(commonRequest.files.get(commonRequest.getInfo()).getBytes());
+        return call(lstmPredictRequest,"lstmPredict");
+    }
+    public LstmPredictResponse lstmPredict(LstmPredictRequest lstmPredictRequest) throws PapiClientSDKException{
+        return call(lstmPredictRequest,"lstmPredict");
     }
 }
 

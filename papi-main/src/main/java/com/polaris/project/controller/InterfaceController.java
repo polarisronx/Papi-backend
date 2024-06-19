@@ -1,6 +1,7 @@
 package com.polaris.project.controller;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
@@ -8,18 +9,19 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.polaris.common.entity.InterfaceInfo;
 import com.polaris.common.entity.InvokeTask;
-import com.polaris.common.entity.User;
+
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.exception.ThrowUtils;
 import com.polaris.common.result.BaseResponse;
 import com.polaris.common.result.ResultUtils;
 import com.polaris.papiclientsdk.basicapi.client.PapiClient;
-import com.polaris.papiclientsdk.common.execption.PapiClientSDKException;
+
 import com.polaris.papiclientsdk.common.model.CommonRequest;
 import com.polaris.papiclientsdk.common.model.CommonResponse;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
+import com.polaris.papiclientsdk.common.utils.http.HttpConnection;
 import com.polaris.project.bizmq.AsyncInvokeProducer;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.InvokeTaskService;
@@ -33,22 +35,19 @@ import com.polaris.project.model.enums.InterfaceStatusrEnum;
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserService;
 import com.polaris.project.utils.ExcelUtils;
-import io.lettuce.core.RedisClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import static com.polaris.common.exception.ThrowUtils.throwIf;
 import static com.polaris.project.constant.RedisConstant.*;
 
@@ -345,17 +344,34 @@ public class InterfaceController {
     /**
      * 接口在线测试调用
      *
-     * @param interfaceInvokeRequest
+     * @param invokeRequest
      * @param request
      * @return
      */
     @PostMapping("/invoke")
-    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInvokeRequest interfaceInvokeRequest,
-                                                      HttpServletRequest request) {
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestPart(value = "file",required = false) MultipartFile file, @RequestParam String invokeRequest,
+                                                      HttpServletRequest request) throws IOException{
+        InterfaceInvokeRequest interfaceInvokeRequest = JSONUtil.toBean(invokeRequest, InterfaceInvokeRequest.class);
         // 校验参数是否为空
         if (interfaceInvokeRequest == null || interfaceInvokeRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+        String suffix = null;
+        String originalFilename = null;
+        if (file != null) {
+            // 校验文件
+            long size = file.getSize();
+            originalFilename = file.getOriginalFilename();
+            // 校验文件大小
+            final long ONE_MB = 1024 * 1024L;
+            ThrowUtils.throwIf(size > ONE_MB, ErrorCode.PARAMS_ERROR, "文件超过 3M");
+            // 校验文件后缀
+            suffix = FileUtil.getSuffix(originalFilename);
+            final List<String> validFileSuffixList = Arrays.asList("xlsx", "csv");
+            ThrowUtils.throwIf(!validFileSuffixList.contains(suffix), ErrorCode.PARAMS_ERROR, "目前仅支持xlsx和csv文件");
+        }
+
+
         // 1 获取接口id
         long id = interfaceInvokeRequest.getId();
         // 获取用户请求参数
@@ -363,12 +379,12 @@ public class InterfaceController {
         // 根据id查出接口的信息
         InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
         // 如果查询到该接口不存在
-        if (interfaceInfo == null){
+        if (interfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         // 判断接口状态，如果接口状态不是已上线状态，则抛出业务异常
-        if (interfaceInfo.getStatus().equals(InterfaceStatusrEnum.OFFLINE.getValue())){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口未上线");
+        if (interfaceInfo.getStatus().equals(InterfaceStatusrEnum.OFFLINE.getValue())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口未上线");
         }
         // 获取当前登录用户的AK和SK
         UserVO loginUser = userService.getLoginUser();
@@ -376,36 +392,41 @@ public class InterfaceController {
         String secretKey = loginUser.getSecretKey();
         Credential credential = new Credential(accessKey, secretKey);
         HttpProfile httpProfile = new HttpProfile(interfaceInfo.getEndpoint(), interfaceInfo.getPath(), interfaceInfo.getMethod());
+        HttpConnection httpConnection = new HttpConnection(60000, 60000, 60000);
         // 创建papi客户端
-        PapiClient papi = new PapiClient(credential,httpProfile);
+        PapiClient papi = new PapiClient(credential, httpProfile,httpConnection);
 
         // 构建请求参数
         Gson gson = new Gson();
         String requestParams = "{}";
         if (fieldList != null && !fieldList.isEmpty()) {
             JsonObject jsonObject = new JsonObject();
-            for (InterfaceInvokeRequest.Field field : fieldList) {
+            for(InterfaceInvokeRequest.Field field : fieldList){
                 jsonObject.addProperty(field.getFieldName(), field.getValue());
             }
             requestParams = gson.toJson(jsonObject);
         }
-        HashMap<String, Object> params = new Gson().fromJson(requestParams, new TypeToken<HashMap<String, Object>>() {}.getType());
+        HashMap<String, Object> params = new Gson().fromJson(requestParams, new TypeToken<HashMap<String, Object>>() {
+        }.getType());
+
         // 构建请求封装类
         CommonRequest commonRequest = new CommonRequest();
         commonRequest.setMethod(interfaceInfo.getMethod());
         commonRequest.setCustomizedParams(params);
         commonRequest.setPath(interfaceInfo.getPath());
+        if (file != null) commonRequest.getFiles().put(originalFilename, file);
+        commonRequest.setInfo(originalFilename);
         // 调用papi接口
         CommonResponse response;
         String action = interfaceInfo.getAction();
         try {
-            Method method = papi.getClass().getMethod(action,CommonRequest.class);
-            response = (CommonResponse)method.invoke(papi,commonRequest);
+            Method method = papi.getClass().getMethod(action, CommonRequest.class);
+            response = (CommonResponse)method.invoke(papi, commonRequest);
             log.info("调用papi接口返回结果: {}", response);
             return ResultUtils.success(response.getData());// 返回调用结果
         } catch (Exception e) {
             log.info(e.getMessage());
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            return ResultUtils.error(ErrorCode.SYSTEM_ERROR,e.getMessage());
         }
     }
     /**
@@ -454,8 +475,7 @@ public class InterfaceController {
         String secretKey = loginUser.getSecretKey();
         Credential credential = new Credential(accessKey, secretKey);
         HttpProfile httpProfile = new HttpProfile(interfaceInfo.getEndpoint(), interfaceInfo.getPath(), interfaceInfo.getMethod());
-        // 创建papi客户端
-        PapiClient papi = new PapiClient(credential,httpProfile);
+
 
         // 构建请求参数
         Gson gson = new Gson();

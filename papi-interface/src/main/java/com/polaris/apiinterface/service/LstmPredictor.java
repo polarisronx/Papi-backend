@@ -21,7 +21,7 @@ import java.util.HashMap;
 @FeignClient(value = "service-django",url = "http://127.0.0.1:8000/")
 public interface LstmPredictor {
     @PostMapping(value = "/user/lstm_predict", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    HashMap<String,Object> lstmPredictExcel(@RequestParam String lstmPredictRequest, @RequestPart(value = "excelData") MultipartFile excelData);
+    HashMap<String,Object> lstmPredictExcel(@RequestParam String lstmPredictRequest, @RequestPart(value = "xlsx") MultipartFile excelData);
     @PostMapping(value = "/user/lstm_predict", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
     HashMap<String,Object> lstmPredictCsv(@RequestParam String lstmPredictRequest,@RequestPart(value = "csvData") MultipartFile csvData);
 }

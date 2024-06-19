@@ -32,6 +32,9 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -87,6 +90,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         String contentType;
         if(method.equals(RequestMethodEnum.POST.getMethod())) {
             contentType = headers.getFirst("Content-Type");
+            contentType = contentType.split(";")==null?contentType:
+                    contentType.split(";")[0];
         }else {
             contentType="-";
         }

@@ -12,7 +12,7 @@ public enum ErrorCode {
     /**
      * 成功
      */
-    SUCCESS(0, "ok"),
+    SUCCESS(200, "ok"),
     /**
      * 请求参数错误
      */

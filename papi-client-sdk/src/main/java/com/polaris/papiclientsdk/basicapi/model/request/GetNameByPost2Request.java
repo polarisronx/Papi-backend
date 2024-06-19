@@ -46,7 +46,7 @@ public class GetNameByPost2Request extends AbstractRequest<GetNameByPostResponse
 
     @Override
     public String getPath (){
-        return "/api/name/c";
+        return "/api/v1/name/c";
     }
 
     @Override
