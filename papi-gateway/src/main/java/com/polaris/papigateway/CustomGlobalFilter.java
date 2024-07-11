@@ -82,9 +82,9 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         // 获取响应对象
         ServerHttpResponse resp = exchange.getResponse();
         // 02 访问控制：黑白名单
-        if (!IP_WHITE_LIST.contains(sourceAddress)){
-            return handleReject(resp);
-        }
+//        if (!IP_WHITE_LIST.contains(sourceAddress)){
+//            return handleReject(resp);
+//        }
         // 03 用户鉴权
         // 从请求头中获取 签名认证的参数 的值
         HttpHeaders headers = req.getHeaders();
@@ -178,6 +178,12 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         if(invokeUser.getPoints()<interfaceInfo.getCosts()){
             throw new BusinessException(ErrorCode.NO_ACCESS_ERROR,"用户积分不足");
         }
+        // 流量染色
+        ServerHttpRequest request = req.mutate().headers(httpHeaders -> {
+            httpHeaders.add("origin", "gateway");
+        }).build();
+        exchange.mutate().request(request);
+
         // 06 请求转发，调用接口
         return handleResponse(exchange, chain, interfaceInfoId, userId);
     }
@@ -247,7 +253,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder (){
-        return 0;
+        return -2;
     }
 
     /*

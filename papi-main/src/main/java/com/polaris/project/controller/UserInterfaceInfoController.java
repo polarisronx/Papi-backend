@@ -2,12 +2,11 @@ package com.polaris.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.polaris.common.entity.User;
 import com.polaris.common.entity.UserInterfaceInfo;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.annotation.AuthCheck;

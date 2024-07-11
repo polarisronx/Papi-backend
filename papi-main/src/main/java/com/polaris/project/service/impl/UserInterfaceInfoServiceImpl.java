@@ -1,13 +1,24 @@
 package com.polaris.project.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.polaris.common.entity.InterfaceInfo;
+import com.polaris.common.entity.User;
 import com.polaris.common.entity.UserInterfaceInfo;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.project.mapper.UserInterfaceInfoMapper;
+import com.polaris.project.model.vo.UserVO;
+import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.UserInterfaceInfoService;
+import com.polaris.project.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+
+import static com.polaris.common.exception.ThrowUtils.throwIf;
 
 /**
 * @author Administrator
@@ -18,6 +29,10 @@ import org.springframework.stereotype.Service;
 public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoMapper, UserInterfaceInfo>
     implements UserInterfaceInfoService{
 
+    @Resource
+    private UserService userService;
+    @Resource
+    private InterfaceInfoService interfaceInfoService;
     @Override
     public void validUserInterfaceInfo (UserInterfaceInfo userInterfaceInfo, boolean add){
         if (userInterfaceInfo == null) {
@@ -35,17 +50,35 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean invokeCount (long interfaceInfoId, long userId){
         if (interfaceInfoId<=0||userId<=0){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口信息或用户不存在");
         }
-        // 使用 UpdateWrapper 对象来构建更新条件
-        UpdateWrapper<UserInterfaceInfo> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("interfaceInfoId",interfaceInfoId);
-        updateWrapper.eq("useId",userId);
-        // setSql方法用于设置要更新的SQL语句
-        updateWrapper.setSql("leftNum = leftNum - 1,totalNum = totalNum + 1");
-        return this.update(updateWrapper);
+        boolean save = true;
+        boolean updateTotal=true;
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(interfaceInfoId);
+        Integer costs = interfaceInfo.getCosts();
+        UserInterfaceInfo userInterfaceInfo = this.getOne(new QueryWrapper<UserInterfaceInfo>().eq("interfaceInfoId", interfaceInfoId).eq("userId", userId));
+        if(userInterfaceInfo==null){
+            save = this.save(new UserInterfaceInfo().builder().userId(userId).interfaceInfoId(interfaceInfoId).totalNum(1).build());
+        }else {
+            // 使用 UpdateWrapper 对象来构建更新条件
+            UpdateWrapper<UserInterfaceInfo> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("interfaceInfoId",interfaceInfoId);
+            updateWrapper.eq("userId",userId);
+            // setSql方法用于设置要更新的SQL语句
+            updateWrapper.setSql("totalNum = totalNum + 1");
+            updateTotal = this.update(updateWrapper);
+        }
+        // 扣除积分
+        Long ownerId = interfaceInfo.getUserId();
+        boolean updatePoint=true;
+        if(ownerId!=userId){
+            updatePoint = userService.update().setSql(String.format("points = points - %d",costs)).eq("id", userId).gt("points",0).update();
+        }
+        throwIf(!(save&&updatePoint&&updateTotal),ErrorCode.SYSTEM_ERROR,"用户积分异常");
+        return true;
     }
 }
 
