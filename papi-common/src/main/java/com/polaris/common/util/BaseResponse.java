@@ -1,4 +1,4 @@
-package com.polaris.common.result;
+package com.polaris.common.util;
 
 import com.polaris.common.exception.ErrorCode;
 import lombok.Data;

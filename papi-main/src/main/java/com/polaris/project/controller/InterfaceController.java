@@ -13,8 +13,8 @@ import com.polaris.common.entity.InvokeTask;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.common.exception.ThrowUtils;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import com.polaris.papiclientsdk.basicapi.client.PapiClient;
 
 import com.polaris.papiclientsdk.common.model.CommonRequest;
@@ -22,6 +22,7 @@ import com.polaris.papiclientsdk.common.model.CommonResponse;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
 import com.polaris.papiclientsdk.common.utils.http.HttpConnection;
+import com.polaris.project.annotation.BlackListInterceptor;
 import com.polaris.project.bizmq.AsyncInvokeProducer;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.InvokeTaskService;
@@ -348,6 +349,7 @@ public class InterfaceController {
      * @param request
      * @return
      */
+    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 1L,business = "invoke", protectLimit = 10)
     @PostMapping("/invoke")
     public BaseResponse<Object> invokeInterfaceInfo(@RequestPart(value = "file",required = false) MultipartFile file, @RequestParam String invokeRequest,
                                                       HttpServletRequest request) throws IOException{
@@ -501,7 +503,9 @@ public class InterfaceController {
 
     }
 
-
+    public BaseResponse limitErr(){
+        return ResultUtils.error(ErrorCode.NO_ACCESS_ERROR, "账号被封禁");
+    }
 
     // endregion
 

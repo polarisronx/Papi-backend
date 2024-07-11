@@ -1,7 +1,6 @@
-package com.polaris.common.result;
+package com.polaris.common.util;
 
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
 
 /**
  * 返回工具类

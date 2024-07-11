@@ -50,6 +50,12 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.nacos</groupId>
+                    <artifactId>nacos-client</artifactId>
+                </exclusion>
+            </exclusions>
             <version>2021.1</version>
         </dependency>
         <!--需要引入该jar才能使bootstrap配置文件生效-->
@@ -79,6 +85,13 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.netflix.ribbon</groupId>
+                    <artifactId>ribbon</artifactId>
+                </exclusion>
+            </exclusions>
+            <version>2021.0.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>
@@ -93,7 +106,7 @@
         <dependency>
             <groupId>io.github.polarisronx</groupId>
             <artifactId>papi-client-sdk</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <!-- JWT -->
         <dependency>

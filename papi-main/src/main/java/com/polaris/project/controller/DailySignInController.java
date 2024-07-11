@@ -3,8 +3,8 @@ package com.polaris.project.controller;
 
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import com.polaris.project.manager.impl.RedisLockManager;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;

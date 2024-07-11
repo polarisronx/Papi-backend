@@ -77,7 +77,7 @@ public class InterfaceInfo implements Serializable {
     private String responseClass;
 
     /**
-     * 接口示意图
+     * 接口插图
      */
     @TableField(value = "interfaceAvatar")
     private String interfaceAvatar;

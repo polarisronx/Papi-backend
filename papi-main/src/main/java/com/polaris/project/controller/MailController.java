@@ -1,8 +1,8 @@
 package com.polaris.project.controller;
 
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import com.polaris.project.manager.MailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

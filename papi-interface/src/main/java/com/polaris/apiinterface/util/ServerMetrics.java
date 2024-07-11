@@ -23,7 +23,7 @@ public class ServerMetrics {
 
     private static OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
     private static MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-    private final static int TOTAL_BAND_WIDTH = 1000;   //网口带宽,Mbps
+    private static final int TOTAL_BAND_WIDTH = 1000;   //网口带宽,Mbps
     private double cpuUsage;
     private double memoryUsage;
     private double diskUsage;

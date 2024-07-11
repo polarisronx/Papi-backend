@@ -8,19 +8,17 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.polaris.common.entity.User;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import com.polaris.project.annotation.BlackListInterceptor;
 import com.polaris.project.model.dto.user.*;
 import com.polaris.project.manager.AliyunOssService;
-import com.polaris.project.utils.CacheClient;
 import com.polaris.project.utils.DeleteRequest;
 import com.polaris.project.model.vo.UserVO;
 import com.polaris.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,13 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.polaris.common.exception.ThrowUtils.throwIf;
-import static com.polaris.project.constant.RedisConstant.CACHE_LOGIN_USER;
-import static com.polaris.project.constant.RedisConstant.CACHE_LOGIN_USER_TTL;
+import static com.polaris.project.constant.RedisConstant.CACHE_LOGIN_USER_PREFIX;
 
 /**
  * 用户接口
@@ -59,7 +55,7 @@ public class UserController {
      * @param userRegisterRequest
      * @return
      */
-    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 1L,business = "register", protectLimit = 10)
+    @BlackListInterceptor(key = "userRegisterRequest", fallbackMethod = "limitErr", rageLimit = 1L,business = "register", protectLimit = 10)
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
 
@@ -256,7 +252,7 @@ public class UserController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 查询缓存
-        String json = stringRedisTemplate.opsForValue().get(id);
+        String json = stringRedisTemplate.opsForValue().get(CACHE_LOGIN_USER_PREFIX+id);
         if(StringUtils.isNotBlank(json)){
             return ResultUtils.success(JSONUtil.toBean(json, UserVO.class));
         }

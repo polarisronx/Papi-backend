@@ -15,6 +15,7 @@ import com.polaris.papiclientsdk.common.model.CommonResponse;
 import com.polaris.papiclientsdk.common.model.Credential;
 import com.polaris.papiclientsdk.common.profile.HttpProfile;
 
+import com.polaris.papiclientsdk.common.utils.http.HttpConnection;
 import com.polaris.project.service.InterfaceInfoService;
 import com.polaris.project.service.InvokeTaskService;
 import com.polaris.project.service.UserService;
@@ -71,8 +72,9 @@ public class AsyncInvokeWorker {
         String secretKey = user.getSecretKey();
         Credential credential = new Credential(accessKey, secretKey);
         HttpProfile httpProfile = new HttpProfile(interfaceInfo.getEndpoint(), interfaceInfo.getPath(), interfaceInfo.getMethod());
+        HttpConnection httpConnection = new HttpConnection(60000, 60000, 60000);
         // 创建papi客户端
-        PapiClient papi = new PapiClient(credential,httpProfile);
+        PapiClient papi = new PapiClient(credential,httpProfile,httpConnection);
         HashMap<String, Object> params = new Gson().fromJson(requestParams, new TypeToken<HashMap<String, Object>>() {}.getType());
         // 构建请求封装类
         CommonRequest commonRequest = new CommonRequest();

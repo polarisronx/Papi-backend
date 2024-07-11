@@ -23,4 +23,14 @@ public interface CommonConstant {
     Integer SIGN_IN_REWARD = 5;
 
 
+    /**
+     * 接口运行状态
+     */
+    String RUNNING = "running";
+    String FAILED =  "failed";
+    String SUCCESS = "success";
+    String WAITING = "waiting";
+
+
+
 }

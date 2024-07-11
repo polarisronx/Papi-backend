@@ -2,7 +2,7 @@ package com.polaris.project.manager.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.polaris.project.manager.MailService;
-import jdk.internal.org.objectweb.asm.signature.SignatureWriter;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.MailSendException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
-import static com.polaris.common.exception.ThrowUtils.throwIf;
+
 import static com.polaris.project.constant.MailConstant.*;
 
 /**

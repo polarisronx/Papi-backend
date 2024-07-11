@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/metrics")
 public class InstanceMetricsController {
-    @Value("${spring.profiles.active}")
-    private String profile;
+//    @Value("${spring.profiles.active}")
+    private String profile="dev";
     @GetMapping("/")
     public InstanceMetricsRep getInstanceMetrics(){
         return BeanUtil.copyProperties(new ServerMetrics(profile), InstanceMetricsRep.class);

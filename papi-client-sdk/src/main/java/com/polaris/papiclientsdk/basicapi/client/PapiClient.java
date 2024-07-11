@@ -1,12 +1,7 @@
 package com.polaris.papiclientsdk.basicapi.client;
 
-import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost1Request;
-import com.polaris.papiclientsdk.basicapi.model.request.GetNameByPost2Request;
-import com.polaris.papiclientsdk.basicapi.model.request.IntToRomanRequest;
-import com.polaris.papiclientsdk.basicapi.model.request.LstmPredictRequest;
-import com.polaris.papiclientsdk.basicapi.model.response.GetNameByPostResponse;
-import com.polaris.papiclientsdk.basicapi.model.response.IntToRomanResponse;
-import com.polaris.papiclientsdk.basicapi.model.response.LstmPredictResponse;
+import com.polaris.papiclientsdk.basicapi.model.request.*;
+import com.polaris.papiclientsdk.basicapi.model.response.*;
 import com.polaris.papiclientsdk.common.execption.PapiClientSDKException;
 import com.polaris.papiclientsdk.common.model.AbstractClient;
 import com.polaris.papiclientsdk.common.model.AbstractRequest;
@@ -31,20 +26,18 @@ import java.util.HashMap;
 @Slf4j
 public class PapiClient extends AbstractClient {
     public static final String SDK_VERSION = "2.0.0-2024-04";
-    public static final String GATEWAY_HOST = "localhost:8090";
+    public static final String GATEWAY_HOST = "127.0.0.1:8090";
+//    106.15.79.18:8090
+    public static final String SIGN_METHOD = "HmacSHA1";
 
-    private  static final HashMap<String, AbstractRequest> requestReady = new HashMap<>();
 
-    static {
-        requestReady.put("GetNameByPost2", new GetNameByPost2Request());
-        requestReady.put("GetNameByPost1", new GetNameByPost1Request());
-    }
     public PapiClient (Credential credential, HttpProfile httpProfile, HttpConnection httpConnection){
         super();
         this.setCredential(credential);
         this.setHttpProfile(httpProfile);
         this.setSdkVersion(SDK_VERSION);
         this.setGatewayHost(GATEWAY_HOST);
+        this.setSignMethod(SIGN_METHOD);
         this.setHttpConnection(httpConnection);
     }
 
@@ -93,6 +86,34 @@ public class PapiClient extends AbstractClient {
     }
     public LstmPredictResponse lstmPredict(LstmPredictRequest lstmPredictRequest) throws PapiClientSDKException{
         return call(lstmPredictRequest,"lstmPredict");
+    }
+    public RandomLoveStoryResponse randomLoveStory(RandomLoveStoryRequest randomLoveStoryRequest) throws PapiClientSDKException{
+        return call(randomLoveStoryRequest,"randomLoveStory");
+    }
+    public RandomLoveStoryResponse randomLoveStory(CommonRequest commonRequest) throws PapiClientSDKException{
+        RandomLoveStoryRequest randomLoveStoryRequest = new RandomLoveStoryRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        return call(randomLoveStoryRequest,"randomLoveStory");
+    }
+    public GetIpResponse getIp(GetIpRequest getIpRequest) throws PapiClientSDKException{
+        return call(getIpRequest,"getIp");
+    }
+    public GetIpResponse getIp(CommonRequest commonRequest) throws PapiClientSDKException{
+        GetIpRequest getIpRequest = new GetIpRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        return call(getIpRequest,"getIp");
+    }
+    public RandomBoyAvatarResponse randomBoyAvatar(RandomBoyAvatarRequest randomBoyAvatarRequest) throws PapiClientSDKException{
+        return call(randomBoyAvatarRequest,"randomBoyAvatar");
+    }
+    public RandomBoyAvatarResponse randomBoyAvatar(CommonRequest commonRequest) throws PapiClientSDKException{
+        RandomBoyAvatarRequest randomBoyAvatarRequest = new RandomBoyAvatarRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        return call(randomBoyAvatarRequest,"randomBoyAvatar");
+    }
+    public RandomGirlAvatarResponse randomGirlAvatar(RandomGirlAvatarRequest randomGirlAvatarRequest) throws PapiClientSDKException{
+        return call(randomGirlAvatarRequest,"randomGirlAvatar");
+    }
+    public RandomGirlAvatarResponse randomGirlAvatar(CommonRequest commonRequest) throws PapiClientSDKException{
+        RandomGirlAvatarRequest randomGirlAvatarRequest = new RandomGirlAvatarRequest(commonRequest.getMethod(), commonRequest.getPath(), commonRequest.getCustomizedParams());
+        return call(randomGirlAvatarRequest,"randomGirlAvatar");
     }
 }
 

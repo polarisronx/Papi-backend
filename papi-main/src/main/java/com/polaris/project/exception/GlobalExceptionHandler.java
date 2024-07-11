@@ -1,9 +1,10 @@
 package com.polaris.project.exception;
 
+
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.BaseResponse;
-import com.polaris.common.result.ResultUtils;
+import com.polaris.common.util.BaseResponse;
+import com.polaris.common.util.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

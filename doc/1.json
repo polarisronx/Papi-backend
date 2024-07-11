@@ -3,6 +3,32 @@
 [
   {
     "type": "int",
+    "fieldName": "timeStep",
+    "required": "false",
+    "desc": "时间步"
+  },
+  {
+    "type": "double",
+    "fieldName": "ratio",
+    "required": "false",
+    "desc": "训练测试比"
+  },
+  {
+    "type": "int",
+    "fieldName": "epoch",
+    "required": "false",
+    "desc": "训练轮次"
+  },
+  {
+    "type": "int",
+    "fieldName": "batchSize",
+    "required": "false",
+    "desc": "批次量"
+  }
+],
+[
+  {
+    "type": "int",
     "fieldName": "code",
     "desc": "全局响应状态码"
   },
@@ -13,9 +39,51 @@
   },
   {
     "type": "String",
-    "fieldName": "data.roman",
+    "fieldName": "data.loveStory",
     "required": "true",
-    "desc": "罗马数"
+    "desc": "情话"
+  }
+],
+[
+  {
+    "type": "int",
+    "fieldName": "code",
+    "desc": "全局响应状态码"
+  },
+  {
+    "type": "int",
+    "fieldName": "data.code",
+    "desc": "内部响应状态码"
+  },
+  {
+    "type": "String",
+    "fieldName": "data.ip",
+    "required": "true",
+    "desc": "ip"
+  },
+  {
+  "type": "String",
+  "fieldName": "data.country",
+  "required": "true",
+  "desc": "country"
+  },
+  {
+  "type": "String",
+  "fieldName": "data.prov",
+  "required": "true",
+  "desc": "prov"
+  },
+  {
+  "type": "String",
+  "fieldName": "data.city",
+  "required": "true",
+  "desc": "city"
+  },
+  {
+  "type": "String",
+  "fieldName": "data.isp",
+  "required": "true",
+  "desc": "isp"
   }
 ]
 

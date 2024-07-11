@@ -26,6 +26,9 @@ public class IntToRomanRequest extends AbstractRequest<IntToRomanResponse> {
     public IntToRomanRequest(){
 
     }
+    public IntToRomanRequest(String num){
+        this.num=num;
+    }
     public IntToRomanRequest(String method,String path, Map<String, Object> params){
         this.path=path;
         this.method=method;
@@ -47,7 +50,7 @@ public class IntToRomanRequest extends AbstractRequest<IntToRomanResponse> {
 
     @Override
     public String getPath (){
-        return "/api/roman/intToRoman";
+        return "/api/v1/roman/intToRoman";
     }
 
     @Override

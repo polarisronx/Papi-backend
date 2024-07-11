@@ -3,13 +3,11 @@ package com.polaris.project.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.polaris.common.entity.User;
 import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
-import com.polaris.common.result.ResultUtils;
 import com.polaris.project.mapper.UserMapper;
 import com.polaris.project.model.dto.user.*;
 import com.polaris.project.model.vo.UserVO;
@@ -215,7 +213,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         UserDTO user = UserHolder.getUser();
         throwIf(user == null, ErrorCode.NOT_LOGIN_ERROR);
         // 查询缓存(考虑缓存穿透）
-        User userEntity = cacheClient.queryWithPassThrough(CACHE_LOGIN_USER, user.getId(), User.class, this::getUserById, CACHE_LOGIN_USER_TTL, TimeUnit.MINUTES);
+        User userEntity = cacheClient.queryWithPassThrough(CACHE_LOGIN_USER_PREFIX, user.getId(), User.class, this::getUserById, CACHE_LOGIN_USER_TTL, TimeUnit.MINUTES);
         throwIf(userEntity == null, ErrorCode.OPERATION_ERROR, "用户不存在");
         return BeanUtil.copyProperties(userEntity, UserVO.class);
     }
@@ -255,10 +253,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User userEntity = BeanUtil.copyProperties(userUpdateRequest, User.class);
         UserDTO user = UserHolder.getUser();
         userEntity.setId(user.getId());
+        // 先更新数据库的用户信息
         boolean b = updateById(userEntity);
         throwIf(!b, ErrorCode.SYSTEM_ERROR, "更新用户信息失败!");
-        // 删除缓存
-        stringRedisTemplate.delete(CACHE_LOGIN_USER+user.getId());
+        // 再删除缓存
+        stringRedisTemplate.delete(CACHE_LOGIN_USER_PREFIX +user.getId());
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(userEntity, userVO);
         UserHolder.saveUser(BeanUtil.copyProperties(userVO, UserDTO.class));
@@ -272,7 +271,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPoints(user.getPoints()+addPoint);
         boolean res = updateById(user);
         // 删除缓存
-        stringRedisTemplate.delete(CACHE_LOGIN_USER+user.getId());
+        stringRedisTemplate.delete(CACHE_LOGIN_USER_PREFIX +user.getId());
         return res;
     }
     @Cacheable(value = "user", key = "'userId:'+#userId")

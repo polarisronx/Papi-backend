@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.polarisronx</groupId>
     <artifactId>papi-client-sdk</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>papi-client-sdk</name>
     <description>papi-client-sdk</description>
     <url>https://github.com/polarisronx/papi-client-sdk.git</url>

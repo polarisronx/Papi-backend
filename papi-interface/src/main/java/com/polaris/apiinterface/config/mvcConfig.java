@@ -1,16 +1,10 @@
-package com.polaris.project.config;
+package com.polaris.apiinterface.config;
 
-
-import com.polaris.project.aop.RefreshTokenInterceptor;
-import com.polaris.project.service.TokenService;
-import org.redisson.api.RedissonClient;
+import com.polaris.apiinterface.aop.OriginInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.annotation.Resource;
 
 /**
  * @author polaris
@@ -22,32 +16,15 @@ import javax.annotation.Resource;
  */
 @Configuration
 public class mvcConfig implements WebMvcConfigurer {
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    TokenService tokenService;
 
 
     @Override
     public void addInterceptors (InterceptorRegistry registry){
 
         // 用于拦截所有请求，负责校验和刷新token。
-        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate,tokenService)).addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/**/loginViaPassword",
-                        "/**/loginViaMail",
-                        "/**/mail/**",
-                        "/**/logout",
-                        "/**/register","/**/registerViaMail",
-                        "/**/doc.html/**",
-                        "/**/v3/api-docs/**",
-                        "/**/swagger-ui.html/**",
-                        "/**/swagger-resources/**",
-                        "/**/webjars/**"
-
-                ).order(1);
-
-
+        registry.addInterceptor(new OriginInterceptor()).addPathPatterns(
+                        "/**/v1/",
+                        "/**/v2/").order(1);
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
