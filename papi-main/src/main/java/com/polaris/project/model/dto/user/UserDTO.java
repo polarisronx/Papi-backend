@@ -24,6 +24,11 @@ public class UserDTO {
     private String userName;
 
     /**
+     * 用户账号
+     */
+    private String userAccount;
+
+    /**
      * 用户头像
      */
     private String userAvatar;
@@ -34,9 +39,10 @@ public class UserDTO {
     private String userRole;
 
 
-    public UserDTO (Long userId, String userName, String avatarUrl){
+    public UserDTO (Long userId, String userName, String avatarUrl,String userAccount){
         this.id = userId;
         this.userName = userName;
         this.userAvatar = avatarUrl;
+        this.userAccount = userAccount;
     }
 }

@@ -8,6 +8,7 @@ import com.polaris.common.exception.BusinessException;
 import com.polaris.common.exception.ErrorCode;
 import com.polaris.project.annotation.BlackListInterceptor;
 
+import com.polaris.project.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -29,9 +30,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import static com.polaris.project.constant.RedisConstant.LIMIT_PREFIX;
+import static com.polaris.project.constant.RedisConstant.*;
 
 @Aspect
 @Component
@@ -78,7 +80,7 @@ public class RageLimitInterceptor {
     @Around("aopPoint() && @annotation(blacklistInterceptor)")
     public Object doRouter(ProceedingJoinPoint jp, BlackListInterceptor blacklistInterceptor) throws Throwable {
         String key = blacklistInterceptor.key();
-
+        String business = blacklistInterceptor.business();
         // 获取请求属性
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) requestAttributes).getRequest();
@@ -92,10 +94,13 @@ public class RageLimitInterceptor {
         String keyAttr;
         if (key.equals("default")) {
             keyAttr = StpUtil.getLoginId().toString();
-        } else {
+        } else if(business.equals("invoke")){
+            keyAttr = UserHolder.getUser().getUserAccount();
+        } else if(business.equals("register") || key.equals("login")){
+            log.info(Arrays.toString(jp.getArgs()));
             keyAttr = getAttrValue(key, jp.getArgs());
-        }
-        keyAttr=LIMIT_PREFIX + blacklistInterceptor.business() + ":" + keyAttr;
+        } else keyAttr = DEFAULT_KEY;
+        keyAttr=LIMIT_PREFIX + business + ":" + keyAttr;
         log.info("aop attr {}", keyAttr);
 
         // 黑名单拦截
@@ -139,10 +144,10 @@ public class RageLimitInterceptor {
      * @return {@link Object}
      */
     private Object fallbackMethodResult(JoinPoint jp, String fallbackMethod) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Signature sig = jp.getSignature();
-        MethodSignature methodSignature = (MethodSignature) sig;
-        Method method = jp.getTarget().getClass().getMethod(fallbackMethod, methodSignature.getParameterTypes());
-        return method.invoke(jp.getThis(), jp.getArgs());
+//        Signature sig = jp.getSignature();
+//        MethodSignature methodSignature = (MethodSignature) sig;
+        Method method = jp.getTarget().getClass().getMethod(fallbackMethod);
+        return method.invoke(jp.getThis());
     }
 
 

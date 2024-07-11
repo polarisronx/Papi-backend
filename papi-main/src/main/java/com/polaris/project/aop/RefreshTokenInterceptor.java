@@ -30,6 +30,8 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
     StringRedisTemplate stringRedisTemplate;
 
 
+
+
     public RefreshTokenInterceptor (StringRedisTemplate stringRedisTemplate, TokenService tokenService){
         this.tokenService=tokenService;
         this.stringRedisTemplate=stringRedisTemplate;
@@ -37,6 +39,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
+
         // 预请求直接放行
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             return true;
