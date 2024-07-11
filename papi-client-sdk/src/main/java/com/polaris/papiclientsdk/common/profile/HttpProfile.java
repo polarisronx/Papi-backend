@@ -25,6 +25,14 @@ public class HttpProfile {
         this.path=path;
         this.method=method;
     }
+    public HttpProfile (String endpoint, String path, String method,String protocol,String contentType,String charset){
+        this.endpoint=endpoint;
+        this.path=path;
+        this.method=method;
+        this.protocol=protocol;
+        this.contentType=contentType;
+        this.charset=charset;
+    }
 // todo 暂不支持代理   private String userAgent;
 
 }

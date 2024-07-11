@@ -23,16 +23,16 @@ import okhttp3.*;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-;
 
 public class HttpConnection {
 
-    // https://stackoverflow.com/questions/31423154/performance-of-a-singleton-instance-okhttpclient
-    // https://github.com/square/okhttp/issues/3372
-    // Creating dispatcher and connectionPool is expensive.
-    // Share them between OkHttpClients by singleton's Builder.
+
     private static final OkHttpClient clientSingleton = new OkHttpClient();
     private OkHttpClient client;
+
+    public HttpConnection(){
+        this.client = clientSingleton;
+    }
 
     public HttpConnection (Integer connTimeout, Integer readTimeout, Integer writeTimeout) {
         this.client = clientSingleton.newBuilder()
