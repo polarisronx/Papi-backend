@@ -8,6 +8,8 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.client.naming.NacosNamingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,23 +38,27 @@ import static com.polaris.common.util.constant.INSTANCE_METRICS_PREFIX;
 public class ActuatorConfig {
     @Value("${spring.profiles.active}")
     private String profile;
-
+    @Resource
+    private DiscoveryClient discoveryClient;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private NacosNamingService nacosNamingService;
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 100000)
     public void scheduledTasks() throws NacosException{
         log.info("定时任务执行中...");
+        List<ServiceInstance> instances = discoveryClient.getInstances("papi-interface");
         // 执行定时任务
-        List<Instance> instances = nacosNamingService.getAllInstances("papi-interface",profile);
-        for(Instance instance : instances){
-            String instanceIp = instance.getIp();
+//        List<Instance> instances = nacosNamingService.getAllInstances("papi-interface",profile);
+        for(ServiceInstance instance : instances){
+            String instanceUri = instance.getUri().toString();
             if("dev".equals(profile)){
-                instanceIp="127.0.0.1";
+                instanceUri="127.0.0.1:8123";
             }
-            String instanceId = instance.getInstanceId();
-            String url = instanceIp + ":" + instance.getPort() + "/api/metrics/";
+            log.info(instance.getMetadata().toString());
+            String instanceId = instance.getMetadata().get("nacos.instanceId");
+            log.info("获取到实例"+instanceId+"的URI:"+instanceUri);
+            String url = "47.100.13.123" + ":" + instance.getPort() + "/api/metrics/";
             HttpResponse response = HttpRequest.get(url).execute();
             log.info("获取到实例"+instanceId+"的指标信息");
             HashMap<String, Object> map= new HashMap<>(JSONUtil.parseObj(response.body()));

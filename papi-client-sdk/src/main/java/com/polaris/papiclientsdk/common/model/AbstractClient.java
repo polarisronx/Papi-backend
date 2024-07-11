@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -70,10 +71,8 @@ public abstract class AbstractClient {
     }
 
     private <T extends CommonResponse> T callByHttp (AbstractRequest<T> request,String actionName) throws PapiClientSDKException, IOException{
-        T okRsp = null;
-        Map<String, Object> customizedParams = request.getCustomizedParams();
-
-        if (!customizedParams.isEmpty() || signMethod.equals(SIGN_SHA1)) {
+        T okRsp;
+        if (signMethod.equals(SIGN_SHA1)) {
             okRsp = doRequest(request, actionName);
         }
         else {
@@ -90,7 +89,7 @@ public abstract class AbstractClient {
 
 
     private <T extends CommonResponse> T doRequest (AbstractRequest<T> request, String actionName)
-            throws PapiClientSDKException, IOException{
+            throws PapiClientSDKException{
         String endpoint = httpProfile.getEndpoint();
         String requestMethod = request.getMethod();
 
@@ -166,7 +165,8 @@ public abstract class AbstractClient {
             T NewResponse = responseClass.newInstance();
             switch (requestMethod) {
                 case "GET": {
-                    httpRequest = new Request.Builder().url(url + "?" + canonicalQueryString).headers(header).get().build();
+                    if(canonicalQueryString.isEmpty())httpRequest = new Request.Builder().url(url).headers(header).get().build();
+                    else httpRequest = new Request.Builder().url(url + "?" + canonicalQueryString).headers(header).get().build();
                     httpResponse = this.httpConnection.doRequest(httpRequest);
                     break;
                 }
