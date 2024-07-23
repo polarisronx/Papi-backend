@@ -104,7 +104,7 @@ npm run build
 
 ### 项目结构
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/papi-architecture.png" style="zoom:80%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/papi-architecture.png" style="zoom:80%;" />
 
 ## 主要功能
 
@@ -114,17 +114,17 @@ npm run build
 
 请您接受我们为您配置的浏览器留存 token，这样登录状态有效周期内（目前是 4 天），系统将会自动为您登录。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/login&register.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/login&register.png)
 
 ### 2 接口发布
 
 您可以 <a href="https://api.papi.icu">Papi 在线开放平台</a> 的发射中心向名为互联网的“星云”发射你超炫酷的接口，与全宇宙的小伙伴一起共享你的创意！
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/add.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/add.png)
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/add2.png" style="zoom:67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/add2.png" style="zoom:67%;" />
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/add3.png" style="zoom:67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/add3.png" style="zoom:67%;" />
 
 但请注意：上传的接口需要满足一定的规范，在上传前请务必仔细阅读文档 <a href="https://doc.papi.icu">Papi 开发者文档</a>
 
@@ -132,13 +132,13 @@ npm run build
 
 您可以 <a href="https://api.papi.icu">Papi 在线开放平台</a> 的接口市场选择自己心仪的接口并在线调试。
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/interface-market.png" style="zoom: 67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/interface-market.png" style="zoom: 67%;" />
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240710091557.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240710091557.png)
 
 当然，在您调试前，先了解一下接口的参数、错误码、代码实例也是十分必要的✨
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/tool.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/tool.png)
 
 ### 4 接口客户端调用 SDK
 
@@ -148,11 +148,11 @@ npm run build
 
 只需要 Java基础 JDK，和寥寥几句代码，即可轻松调用 papi 丰富的接口！
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240710135353.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240710135353.png)
 
 此外，papi-client-sdk 已经登陆 **Maven 中心仓库**，只需要在 pom 文件中引入即可快速启动🎉
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/maven-papi.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/maven-papi.png)
 
 (maven 上传有延迟，1.0.3版本已经发布)
 
@@ -178,7 +178,7 @@ PapiClient papi = new PapiClient(credential, httpProfile,httpConnection);
 
 也可以引入springboot框架，用配置文件注入属性自动装配 papi-client 实例
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/papi-yml.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/papi-yml.png)
 
 然后在spring扫描路径的类下
 
@@ -193,7 +193,7 @@ PapiClient papiClient;
 
 目前功能还十分单一，仅对管理员权限用户开放，后续完善后会对所有用户开放。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240711144449.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240711144449.png)
 
 ### 6 个性化设置
 
@@ -201,15 +201,17 @@ PapiClient papiClient;
 
 # 开发记录 note
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/images/Papi-request-detail.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/images/Papi-request-detail.png)
 
 ## 1 前端项目目录结构
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/image (3).png)![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240304104906.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/image (3).png)
+
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240304104906.png)
 
 后端准备多个dto
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/image0304.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/image0304.png)
 
 前端自动生成 openAPI
 
@@ -217,7 +219,7 @@ modalForm 模态框
 
 添加表单项的校验规则
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/image (4).png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/image (4).png)
 
 ## 2 接口信息管理
 
@@ -280,29 +282,29 @@ modalForm 模态框
 
 1. 首先，修改与添加modal大致相同，不同之处在于，修改是有原数据的，所以modal中要传进来值，然后设置表单内的初始值initialValues
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240306150939.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240306150939.png)
 
 2. 在页面中，会把currentRow传到 modal 中的values中来。但是有一个问题，就是initialValues只会初始化一次，点其他行修改时，里面的数据还是最开始的。所以要用一个监听，当换不同的行，数据发生了变化以后要进行修改。
 
 3. 在React中用useEffect()来监听数据的变化，注意form要传入proTableRef，这样才能访问到表单实例
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307203743.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307203743.png)
 
    - 在组件中写的内容会直接显式在页面上
 
-     ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307203924.png)
+     ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307203924.png)
 
 4. 在实测时发现报错，提示没有传入id。溯源：用户点击提交，实际上执行了onSubmit，并执行了 handleUpdate()方法，并传进Value的参数，这个参数来自我们的内部组件UpdateModal这个模态窗里用户输入的信息。而UpdateModal模态窗内的columns是由外部定义的，在这些columns 中，我们把id列的属性定义为了index。这样定义的结果是，id列不会出现在表单项里，也就不会被填入表单。
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307204606.png)![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307205223.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307204606.png)![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307205223.png)
 
 5. 我们需要保存用户当前点击的数据项的 id，这里有个现成的 **<font color='red'>选中行</font>currentRow**，直接用这个去取id就行了。
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307205911.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307205911.png)
 
    我们在点击修改时执行了选中行和让修改模态框显示
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240307211314.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240307211314.png)
    
    在表格中的render函数中，行记录的数据存储在record中
    
@@ -434,7 +436,7 @@ const match = useMatch('interface_detail/:id');
 alert(JSON.stringify(match))
 ```
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/image316.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/image316.png)
 
 2. 但我们这并不需要这么全的信息，只需获取路由中的参数，可以用 useParams 的钩子函数
 
@@ -589,7 +591,7 @@ spring:
 
 **问题**：预期是等模拟接口调用完成，才记录响应日志、统计调用次数，但是发现chain.filter()方法放行，Filter过滤器return执行完了之后才执行的接口方法。因为是chain.filter()异步的，没有立即去执行接口方法，Gateway的架构里也可以看到，是执行完所有的Filter值才拿到服务的代理对象执行的。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240325211736.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240325211736.png)
 
 解决方法：利用**Response装饰者**，增强原有Response的处理能力。
 
@@ -802,13 +804,13 @@ Dubbo+nacos
 
   https://console.cloud.tencent.com/api/explorer
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329105337.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329105337.png)
 
 > ##### 02 SDK信息
 
 欢迎使用腾讯云开发者工具套件（SDK）3.0，SDK 3.0是云 API 3.0平台的配套工具。目前已经支持 CVM、VPC、CBS 等产品，后续所有的云服务产品都会陆续接入。新版 SDK 实现了统一化，具有各个语言版本的 SDK 使用方法相同，接口调用方式相同，错误码相同以及返回包格式相同等优点。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329105445.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329105445.png)
 
 > ##### 03 SDK使用文档
 
@@ -824,7 +826,7 @@ Dubbo+nacos
 
 主路径下是不同功能模块的对应SDK包
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329114259.png)![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329114354.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329114259.png)![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329114354.png)
 
 **单个模块源码结构**
 
@@ -832,25 +834,25 @@ Dubbo+nacos
 
   主要是对应一个API接口的一个Request和Response封装类（用于发送请求时的参数和接收响应结果的封装类），也有一些该模块下特有的一些其他方法
 
-  ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329115521.png)
+  ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329115521.png)
 
 - **AaClient**
 
   客户端类，主要是三部分：属性、构造器、方法
 
-  ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329115857.png)
+  ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329115857.png)
 
   **构造器**：构造器中需要传入credential（凭证，后面讲），region（地区），ClientProfile（定义客户端的属性而封装的类，主要是设置签名方法、Http属性、语言、是否debug等）
 
   **方法**：调用API的入口方法（不是具体的业务，执行这个方法就会发送请求到对应的主机来执行业务），参数是在models中的Request封装类，返回类型是Response的封装类。里面执行了相对通用的发送请求的方法 internalRequest()，主要是根据不同的API (actionName)来发送请求（后面细讲）。
 
-  ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329125804.png)
+  ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329125804.png)
 
 - **AaErrorCode**
 
   定义了不同错误类型的枚举类
 
-  ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329130641.png)
+  ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329130641.png)
 
 **源码通用结构：Common包**
 
@@ -874,17 +876,17 @@ Common包结构
 
 5. 通用结构
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329131824.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329131824.png)
 
    - AbstractClient：抽象类，定义了客户端的一些基础结构，其他模块的客户端在此基础上实现
 
    - Credential：定义了用户调用接口许可的凭证，如密钥ID和密钥。
 
-     ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329133815.png)
+     ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329133815.png)
 
    - sign：定义前面生成方法，加密算法等
 
-     ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329134206.png)
+     ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329134206.png)
 
    - AbtractModel：抽象类，定义了Request和Response的一些基础结构，其他模块的Request和Response在此基础上实现
 
@@ -988,11 +990,11 @@ protected <T> T internalRequest(AbstractModel request, String actionName, Class<
 
 这个方法前面的我们不关心，就是获取一些属性，设置签名的算法，实际作用的是框出来的 **doRequest**和**doRequestWithTC3**。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329142339.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329142339.png)
 
 3. **doRequest()**比较简洁，先看
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329142825.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329142825.png)
 
    **对于<font color='red'>get</font>请求**：
 
@@ -1006,7 +1008,7 @@ protected <T> T internalRequest(AbstractModel request, String actionName, Class<
 
    postRequest()方法中，请求参数以**application/x-www-form-urlencoded**键值对参数类型放在请求体中，将请求地址、请求头放入创建请求，然后doRequest()执行。
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329145129.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329145129.png)
 
    关于请求参数 StrParam 的特别说明：请求参数由两部分组成，一是API接口本身要传递的参数，这个由不同模块自己的Request已经封装好了，二是API接口名，因为对于通用的请求发起方法来说，不知道实际要请求的是哪个接口。
 
@@ -1103,7 +1105,7 @@ protected <T> T internalRequest(AbstractModel request, String actionName, Class<
 
 点击下载工程就能把该API接口相关的SDK下载下来了
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329195657.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329195657.png)
 
 在IDEA中打开
 
@@ -1116,7 +1118,7 @@ protected <T> T internalRequest(AbstractModel request, String actionName, Class<
 5. 执行方法
 6. 拿到响应Response
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329195350.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329195350.png)
 
 ### Aliyun
 
@@ -1156,7 +1158,7 @@ OpenAPI 门户提供以下功能：
 
   提供网页版命令行工具，模拟 Linux 操作体验使用命令行调用 OpenAPI 。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/6c3ebf00103vd.svg)
+![](https://github.com/polarisronx/Papi-backend/doc/images/6c3ebf00103vd.svg)
 
 OpenAPI 门户要求开发者必须登录，通过用户登录身份，系统会自动获取可用的 AK 信息，调用 OpenAPI ，无需用户在调试界面传入 AK 数据，提升 OpenAPI 调试的便捷性。
 
@@ -1164,13 +1166,13 @@ OpenAPI 门户要求开发者必须登录，通过用户登录身份，系统会
 
 界面比较相似
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329104518.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329104518.png)
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329104818.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329104818.png)
 
 SDK也很类似
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240329200802.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240329200802.png)
 
 ### 美团
 
@@ -1182,7 +1184,7 @@ SDK也很类似
 
 2. 以美团为例，美团开放平台将美团各类业务提供的扩展服务封装成一系列应用程序编程接口（API）对外开放，供第三方开发者使用。开发者可通过调用开放平台提供的OpenAPI获取数据和能力，以实现自身系统与美团系统协同工作的业务逻辑。以外卖业务场景为例，开发者可以在自己为外卖商户开发的应用中通过调用美团开放平台提供的API，提供外卖订单查询、接单、订单管理等一系列功能。如下图所示：
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/42fc2d55ccbed47e618eb1f16a94a5e7121354.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/42fc2d55ccbed47e618eb1f16a94a5e7121354.png)
 
 3. 美团开放平台提供给开发者的**接口契约较为复杂**，其中包含了业务规则复杂及安全性要求高等原因。若**开发者需要直接从0到1编码对接平台提供的HTTP API，需要关注通信协议、接口契约规范、认证标识传递和安全签名等细节，成本较高**。随着业务的发展，平台支持的OpenAPI数量在近两年增长约一倍，达到近1000个，平台运营和研发人员需要投入越来越多的精力去帮助开发者解决接口对接过程中的疑难问题。因此，提供SDK以帮助开发者提高开发对接效率，变得十分有必要。
 
@@ -1190,7 +1192,7 @@ SDK也很类似
 
 SDK，英文名称为 Software Development Kit，即软件开发工具包，广义上指辅助开发某一类软件的相关工具、文档和范例的集合。在开放平台的场景，我们为开发者提供的SDK应能为其屏蔽调用OpenAPI的**通信协议、参数传递规范、接口基础契约（如时间戳、安全签名）**等细节，以降低其对接平台API所需的开发成本。具备基本功能的开放平台SDK的架构和功能模块如下所示：
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/a68a0c26f4d404ed8b2745f4ad21687f193061.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/a68a0c26f4d404ed8b2745f4ad21687f193061.png)
 
 > #### **03 SDK设计目标**
 
@@ -1228,13 +1230,13 @@ SDK，英文名称为 Software Development Kit，即软件开发工具包，广�
 
    整体流程如下图所示：
 
-   <img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/d98ed501c083ca9b5207c4c052b3abcc340972.png" style="zoom: 50%;" />
+   <img src="https://github.com/polarisronx/Papi-backend/doc/images/d98ed501c083ca9b5207c4c052b3abcc340972.png" style="zoom: 50%;" />
 
 > #### **05 API元数据**
 
 **API元数据是代码语料生成的数据源**，其来源于开放平台实现的零编码API网关底层维护的基础配置。开放平台网关基于API元数据配置化的技术，可做到零编码将业务服务的RPC接口转化为HTTP协议的API进行开放。其基本运行结构如下图所示：
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/49245d3c18d8f755dbefdc6478f689bf230136.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/49245d3c18d8f755dbefdc6478f689bf230136.png)
 
 API元数据中包含了**<font color='red'>HTTP Method、URL、请求参数、返回参数等</font>**信息。在参数信息中，又以树形结构记录了**每个参数字段的字段名、字段类型、字段描述、校验规则和示例值**，有了这些信息就能够支撑我们为SDK生成参数富模型和调用示例代码。例如“按订单id查询订单详情”，其元数据中和SDK生成相关的数据如下所示：
 
@@ -1269,7 +1271,7 @@ Response
 
 **代码语料可以理解为符合编程思想，能让机器立即和实现的代码原料，能够让语言转换引擎直接翻译为代码。**不同语言的语料略有不同，以生成Java SDK中的参数富模型代码为例，需要用到的代码语料包含两部分。第一部分为**类的基本信息**，由元数据解析器在解析API的元数据时生成，其包含的内容和具体生成方式如下表所示：
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/e2d3a67d186f36e9c5b24e47b056e2cb504544.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/e2d3a67d186f36e9c5b24e47b056e2cb504544.png)
 
 第二部分为**语料模板**，我们以DSL（Domain Specific Language）作为中间语言加以描述，如下所示：
 
@@ -1322,7 +1324,7 @@ Response
 
 以生成Response类代码为例，代码生成的具体执行过程如下图所示：
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/723c582613c49822aeb8f8a6279f7e59636801.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/723c582613c49822aeb8f8a6279f7e59636801.png)
 
 Request和Response类中其余的`getter`方法、`setter`方法、类注解等元素的生成原理和步骤均和以上相同，此处不再赘述。在DSL语料模板中所有的元素处理完成后，我们即可得到供Java编程语言使用的请求参数类和返回参数类的完整代码。
 
@@ -1394,7 +1396,7 @@ API调用示例代码可以为开发者呈现出每个请求参数赋值的示�
 
 传统由人工编译、测试和上传发布SDK的模式，开发者得到SDK版本更新的周期短则数周，长则数月。我们的目标是将这个周期缩短到分钟级别：**当SDK的基础逻辑和API参数模型有任何变更发生时，通过持续集成和持续发布的能力，在数分钟内将包含此变更的新版本SDK发布给开发者使用**。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/bf5a87af7adc4bc44249c5f003fba930270816.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/bf5a87af7adc4bc44249c5f003fba930270816.png)
 
 首先我们监听可能导致SDK需要发布的变更，包括通过Binlog机制监听API元数据的变更，以及通过Git Hook机制监听SDK基础逻辑代码仓库Master分支的变更。一旦监听到有变更产生，通过触发器去触发SDK持续集成和发布流水线的运作。
 
@@ -1433,7 +1435,7 @@ API调用示例代码可以为开发者呈现出每个请求参数赋值的示�
 
 5. 在规范请求中 host 放入的是服务终端endpoint，而在后面网关中 host已经被修改为了 网关的地址，可以把endpoint放请求头传过来，但是这样就对外暴露了接口的服务终端，解决办法是根据path和method查数据库找到接口对应的endpoint 。
 
-   ![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240409191959.png)
+   ![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240409191959.png)
 
 
 
@@ -1549,7 +1551,7 @@ passwoed:nEUthtTz5LomZ/A89xlHN33J9sYNFGmTIQJ89H43bLTp
 
 需要https//[http://www.gnupg.org/download/](https://link.zhihu.com/?target=http%3A//www.gnupg.org/download/) 下载软件，创建密钥并上传
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240527211109.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240527211109.png)
 
 https//[http://www.gnupg.org/download/](https://link.zhihu.com/?target=http%3A//www.gnupg.org/download/) 这个网站上能查得到就成功
 
@@ -1692,13 +1694,13 @@ https//[http://www.gnupg.org/download/](https://link.zhihu.com/?target=http%3A//
 
 7. 点击插件deploy，然后就可以登录之前的网站publish
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240527211852.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240527211852.png)
 
 参考[2024年2月后如何使用maven central发布自己的jar到中央仓库_central-publishing-maven-plugin-CSDN博客](https://blog.csdn.net/qq_37160346/article/details/136537800)
 
 [如何发布开源组件到Maven中央仓库（新） - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/681731772)
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240710141029.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240710141029.png)
 
 **遇到的问题**
 
@@ -1784,7 +1786,7 @@ rToken 4\*60\*60*24 4天
 
    解决：token中不再添加过期时间。是否过期由后台根据签发时间iat+ACCESS_TOKEN_EXPIRATION_TIME判断。
 
-   <img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240427210107.png" style="zoom: 50%;" /><img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240427205743.png" style="zoom:50%;" />
+   <img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240427210107.png" style="zoom: 50%;" /><img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240427205743.png" style="zoom:50%;" />
 
 ## 拓展3：前端优化
 
@@ -1867,7 +1869,7 @@ export default PrivacyAgreement;
 
 优化界面UI 以及增加接口搜索功能
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240428214018.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240428214018.png)
 
 ***TODO***：收藏、点赞和评论功能待开发
 
@@ -1995,7 +1997,7 @@ valueType改为text后还是报错。原因是assigned生成的ID是由雪花算
 
 参考：[雪花算法原理以及JS精度丢失问题-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/1166385)
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240504172003.png" style="zoom:80%;" /><img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240504172033.png" style="zoom:67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240504172003.png" style="zoom:80%;" /><img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240504172033.png" style="zoom:67%;" />
 
 ## 拓展5：Nacos 配置中心
 
@@ -2065,7 +2067,7 @@ dubbo:
 
 ## 扩展：多环境配置与部署上线
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240424215901.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240424215901.png)
 
 ```ya
 spring:
@@ -2144,7 +2146,7 @@ export async function getInitialState(): Promise<InitialState> {
 
 流程参考：图片来源[Springboot----实现邮箱验证码登录(代码部分)_springboot实现邮箱验证码登入-CSDN博客](https://blog.csdn.net/weixin_45750572/article/details/125467669)
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/c62d13dcf1654c20a31a4e2a9c86b2d6.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/c62d13dcf1654c20a31a4e2a9c86b2d6.png)
 
 **遇到的问题：knife4j 无法访问。**
 
@@ -2622,7 +2624,7 @@ json.loads(request.body)
 
 解决：发现给lstmPredictRequest加@RequestParam注解在python的django端能在request.GET里获取。但此时是对象，传到django就变字符串了，应该转为Json串传输。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240613120433.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240613120433.png)
 
 ```java
 //controller
@@ -2644,7 +2646,7 @@ public LstmPredictResponse lstmPredict(@RequestPart(value = "file") MultipartFil
 
 前端还未完善，现使用Postman测试，向springboot项目发起请求，能得到Django项目的返回结果。
 
-![ ](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240613160611.png)
+![ ](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240613160611.png)
 
 > ### 前端完善，实际部署
 
@@ -2667,7 +2669,7 @@ public BaseResponse<Object> invokeInterfaceInfo(@RequestPart(value="file",requir
 
 但这显然不行，许用统一用application/form-data的形式接收，@RequestPart和@RequestParam都可以用于获取键值类型的数据。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240619164036.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240619164036.png)
 
 - 校验文件格式
 
@@ -2794,9 +2796,9 @@ public LstmPredictResponse lstmPredict(@RequestParam(value = "xlsx",required = f
 
 @RequestParam
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240618093311.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240618093311.png)
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240618094520.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240618094520.png)
 
 ```java
 case "POST": {
@@ -2813,9 +2815,9 @@ case "POST": {
 }
 ```
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240618105514.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240618105514.png)
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240618095630.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240618095630.png)
 
 2. python Django项目获取参数
 
@@ -2859,9 +2861,9 @@ except Exception:
 
 比如说，这是最终的结果：
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240619190811.png" style="zoom:67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240619190811.png" style="zoom:67%;" />
 
-<img src="https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240619190904.png" style="zoom:67%;" />
+<img src="https://github.com/polarisronx/Papi-backend/doc/images/QQ20240619190904.png" style="zoom:67%;" />
 
 实际上没有这么这么顺利，不知道为什么base64.b64encode得到的base64字符串长度比我把文件保存下来用第三方工具转换的要短，实际在前端的时候也不是这个样子，只有一个空白的图片。这个找了很久都没看出来哪里的问题，先不细究了。后面如果优化的话，可以把预测数据传回来再在前端用echarts等可视化工具框架复现这个图表，会更优雅一些。
 
@@ -2909,7 +2911,7 @@ spring gateway的默认负载均衡策略是轮询，在开发和一般环境已
 
 对上诉4个指标加权平均，取综合值来衡量实例的繁忙程度。
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240630161135.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240630161135.png)
 
 每个实例都开放性能监测接口
 
@@ -3027,7 +3029,7 @@ public class RoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalance
 
 实测效果
 
-![](https://github.com/polarisronx/Papi-backend/edit/master/doc/images/QQ截图20240630155958.png)
+![](https://github.com/polarisronx/Papi-backend/doc/images/QQ20240630155958.png)
 
 ## 拓展12：接口QPS测试
 
