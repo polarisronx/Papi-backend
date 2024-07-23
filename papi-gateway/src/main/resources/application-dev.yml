@@ -1,11 +1,28 @@
 spring:
+  application:
+    name: papi-gateway
   cloud:
     gateway:
+      loadbalancer:
+        type: LOAD
+        use404: false
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true # 服务名小写
       routes:
         - id: papi-route
-          uri: http://localhost:8123
+#          uri: http://localhost:8123
+          uri: lb://papi-interface
           predicates:
             - Path=/api/**
+  # redis 配置
+  redis:
+    port: 6379
+    # 远程 Redis
+    host: 106.15.79.18
+    database: 0
+    password: 907830201
 host:
 #  nacos: 106.15.79.18:8848
   nacos: 127.0.0.1:8848
@@ -13,11 +30,9 @@ dubbo:
   application:
     name: papi-gateway
   # 设置dubbo的协议为dubbo，随机分配端口
-    qos:
-      enable: false
   protocol:
     name: dubbo
-    port: 22225
+    port: 22229
   registry:
     # 配置注册中心为 nacos，使用的地址是 nacos://127.0.0.1:8848
     id: nacos-registry
@@ -28,3 +43,5 @@ dubbo:
       namespace: 742651c4-5b7c-45e8-91ce-a1d2ba31cf02
 server:
   port: 8090
+  tomcat:
+    max-http-form-post-size: 10MB

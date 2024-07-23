@@ -1,9 +1,14 @@
+host:
+  nacos: 127.0.0.1:8848
 spring:
+  application:
+    name: papi-main
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 本地MySQL
 #    url: jdbc:mysql://localhost:3306/openAPI?serverTimezone=Asia/Shanghai
+    # 远程MySQL
     url: jdbc:mysql://106.15.79.18:3306/papi?serverTimezone=Asia/Shanghai
 #   username: root
 #    password: 123456
@@ -14,6 +19,7 @@ spring:
     port: 6379
     # 本地虚拟机 Redis
 #    host: 192.168.108.128
+    # 远程 Redis
     host: 106.15.79.18
     database: 0
 #    password: 123456
@@ -23,6 +29,30 @@ spring:
     port: 5672
     password: 123456
     username: admin
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: ${host.nacos}
+#        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+#        group: ${spring.profiles.active}
+#        username: nacos
+#        password: nacos
+#      config:
+#        server-addr: ${host.nacos}
+#        #        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+#        # 本地nacos
+#        #        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
+#        #服务器dev
+#        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+#        # 部署版本必改2
+#        group: ${spring.profiles.active}
+#        file-extension: yaml
+#        extension-configs:
+#          #          - data-id: papi-main-prod.yaml
+#          - data-id: papi-main-dev.yaml
+#            # 部署版本必改3
+#            group: ${spring.profiles.active}
+#            refresh: true
 dubbo:
   application:
     name: papi-main

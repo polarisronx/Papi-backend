@@ -1,4 +1,9 @@
+host:
+  # 服务器环境用内网ip
+  nacos: 172.28.16.169:8848
 spring:
+  application:
+    name: papi-main
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,6 +21,7 @@ spring:
     port: 5672
     password: 123456
     username: admin
+
 dubbo:
   application:
     name: papi-main
@@ -31,3 +37,9 @@ dubbo:
       # 注意 这里要在 nacos 创建名为 dubbo 的 namespace 环境
       namespace: 0850d63f-ea6a-4b57-8f5c-10ed248eb696
 #      group: ${spring.profiles.active} Param 'group' is illegal
+#server:
+#  ssl:
+#    key-store: classpath:api.papi.icu.jks
+#    key-store-password: urq0dz1i
+#    key-store-type: JKS
+debug: false

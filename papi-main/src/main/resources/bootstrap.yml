@@ -1,15 +1,17 @@
+host:
+  nacos: 172.28.16.169:8848
+#
+# 127.0.0.1:8848
 server:
   port: 7529
   servlet:
     context-path: /api
-host:
-  nacos: 127.0.0.1:8848
-  #本地nacos
-#  nacos: 106.15.79.18:8848
-  # 部署版本必改1
-#  nacos: 172.28.16.169:8848
-  # 服务器环境用内网ip
+  tomcat:
+    max-http-form-post-size: 10MB
 spring:
+  devtools:
+    restart:
+      enabled: false
   application:
     name: papi-main
   profiles:
@@ -17,28 +19,27 @@ spring:
     # 部署版本注释内容
   cloud:
     nacos:
-      discovery:
-        server-addr: ${host.nacos}
-        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
-        group: ${spring.profiles.active}
-        username: nacos
-        password: nacos
       config:
         server-addr: ${host.nacos}
-        namespace: b765d215-8484-45ec-a86f-07048c01dd47
-        # 本地nacos
-#        namespace: 06e007cd-7e25-44ac-aa22-961f017442e4
-        #服务器dev
-#        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
-        # 部署版本必改2
+        # 远程 nacos prod
+        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        #
+        # b765d215-8484-45ec-a86f-07048c01dd47
         group: ${spring.profiles.active}
         file-extension: yaml
         extension-configs:
-#          - data-id: papi-main-prod.yaml
-          - data-id: papi-main-dev.yaml
-            # 部署版本必改3
+          - data-id: papi-main-prod.yaml
+            # 必改
             group: ${spring.profiles.active}
             refresh: true
+      discovery:
+        server-addr: ${host.nacos}
+        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        # prod in ecs
+        # dev in local b765d215-8484-45ec-a86f-07048c01dd47
+        group: ${spring.profiles.active}
+        username: nacos
+        password: nacos
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -58,7 +59,7 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
-debug: true
+debug: false
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:

@@ -1,4 +1,6 @@
 server:
+  tomcat:
+    max-http-form-post-size: 10MB
   port: 8123
   servlet:
     context-path: /api
@@ -6,3 +8,9 @@ papi:
   client:
     access-key: polaris
     secret-key: abcdefgh
+spring:
+  application:
+    name: papi-interface
+#消费者将要去访问的微服务名称(注册成功进nacos的微服务提供者)
+service-url:
+  nacos-user-service: http://service-django

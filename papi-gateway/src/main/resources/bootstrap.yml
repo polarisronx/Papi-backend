@@ -1,0 +1,20 @@
+spring:
+  devtools:
+    restart:
+      enabled: false
+  application:
+    name: papi-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+#       # 172.28.16.169:8848
+        #
+        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+        # prod in ecs e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        # dev in local
+        group: ${spring.profiles.active}
+        username: nacos
+        password: nacos

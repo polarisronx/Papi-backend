@@ -3,3 +3,30 @@ spring:
     name: papi-interface
   profiles:
     active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        #
+        # 172.28.16.169:8848
+        namespace: b765d215-8484-45ec-a86f-07048c01dd47
+        #
+        # e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        group: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        service: ${spring.application.name}
+        metadata:
+          nacos.instanceId: interface1
+#        ip: 47.100.13.123
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 600000 # 设置 Feign 客户端的连接超时时间（单位为毫秒）
+        readTimeout: 600000    # 设置 Feign 客户端的读取超时时间（单位为毫秒）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

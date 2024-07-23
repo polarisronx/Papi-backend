@@ -2,6 +2,22 @@ server:
   port: 8123
   servlet:
     context-path: /api
+spring:
+  application:
+    name: papi-interface
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.28.16.169:8848
+        namespace: e257c0b1-b1a7-4af9-bf48-d2d4455dc32f
+        #        06e007cd-7e25-44ac-aa22-961f017442e4
+        group: ${spring.profiles.active}
+        username: nacos
+        password: nacos
+        service: ${spring.application.name}
+        metadata:
+          nacos.instanceId: interface1
+        ip: 47.100.13.123
 papi:
   client:
     access-key: polaris
