@@ -205,7 +205,7 @@ PapiClient papiClient;
 
 ## 1 前端项目目录结构
 
-![](https://github.com/polarisronx/Papi-backend/blob/master/doc/images/image (3).png)
+![](https://github.com/polarisronx/Papi-backend/blob/master/doc/images/image33.png)
 
 ![](https://github.com/polarisronx/Papi-backend/blob/master/doc/images/QQ20240304104906.png)
 
@@ -219,7 +219,7 @@ modalForm 模态框
 
 添加表单项的校验规则
 
-![](https://github.com/polarisronx/Papi-backend/blob/master/doc/images/image (4).png)
+![](https://github.com/polarisronx/Papi-backend/blob/master/doc/images/image44.png)
 
 ## 2 接口信息管理
 

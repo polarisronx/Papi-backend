@@ -349,7 +349,7 @@ public class InterfaceController {
      * @param request
      * @return
      */
-    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 1L,business = "invoke", protectLimit = 10)
+    @BlackListInterceptor(key = "userAccount", fallbackMethod = "limitErr", rageLimit = 1L,business = "invoke", protectLimit = 1)
     @PostMapping("/invoke")
     public BaseResponse<Object> invokeInterfaceInfo(@RequestPart(value = "file",required = false) MultipartFile file, @RequestParam String invokeRequest,
                                                       HttpServletRequest request) throws IOException{
